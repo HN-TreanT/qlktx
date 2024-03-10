@@ -1,20 +1,25 @@
 package com.qlktx.qlktx.entities;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
-@Table(name = "bienbanbangiao", indexes = {
-        @Index(name = "MaSinhVien", columnList = "MaSinhVien")
-})
 @Entity
+@Table(name = "bienbanbangiao")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Bienbanbangiao {
     @Id
-    @Column(name = "MaBienBan", nullable = false)
-    private Integer id;
+    @Column(name = "MaBienBan")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer maBienBan;
 
     @Column(name = "NgayBanGiao")
-    private LocalDate ngayBanGiao;
+    private LocalDateTime ngayBanGiao;
 
     @Column(name = "HoTenNguoiBanGiao")
     private String hoTenNguoiBanGiao;
@@ -22,47 +27,11 @@ public class Bienbanbangiao {
     @Column(name = "HoTenSinhVien")
     private String hoTenSinhVien;
 
+    // @Column(name = "MaSinhVien")
+    // private Integer maSinhVien;
+
     @ManyToOne
     @JoinColumn(name = "MaSinhVien")
     private Sinhvien maSinhVien;
 
-    public Sinhvien getMaSinhVien() {
-        return maSinhVien;
-    }
-
-    public void setMaSinhVien(Sinhvien maSinhVien) {
-        this.maSinhVien = maSinhVien;
-    }
-
-    public String getHoTenSinhVien() {
-        return hoTenSinhVien;
-    }
-
-    public void setHoTenSinhVien(String hoTenSinhVien) {
-        this.hoTenSinhVien = hoTenSinhVien;
-    }
-
-    public String getHoTenNguoiBanGiao() {
-        return hoTenNguoiBanGiao;
-    }
-
-    public void setHoTenNguoiBanGiao(String hoTenNguoiBanGiao) {
-        this.hoTenNguoiBanGiao = hoTenNguoiBanGiao;
-    }
-
-    public LocalDate getNgayBanGiao() {
-        return ngayBanGiao;
-    }
-
-    public void setNgayBanGiao(LocalDate ngayBanGiao) {
-        this.ngayBanGiao = ngayBanGiao;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

@@ -1,103 +1,56 @@
 package com.qlktx.qlktx.entities;
 
+
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.util.List;
+import java.util.ArrayList;
 
-@Table(name = "hopdong", indexes = {
-        @Index(name = "SoPhong", columnList = "SoPhong"),
-        @Index(name = "MaSinhVien", columnList = "MaSinhVien")
-})
+
 @Entity
+@Table(name = "hopdong")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Hopdong {
     @Id
-    @Column(name = "MaHopDong", nullable = false)
-    private Integer id;
+    @Column(name = "MaHopDong")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer maHopDong;
 
     @Column(name = "NgayHopDong")
-    private LocalDate ngayHopDong;
+    private java.sql.Date ngayHopDong;
 
     @Column(name = "TenNguoiLam")
     private String tenNguoiLam;
 
-    @Column(name = "SDTNguoiLam", length = 20)
-    private String sDTNguoiLam;
+    @Column(name = "SDTNguoiLam")
+    private String sdtNguoiLam;
 
     @Column(name = "ThoiGianChoThue")
-    private LocalDate thoiGianChoThue;
+    private java.sql.Date thoiGianChoThue;
 
     @Column(name = "ThoiGianHetHan")
-    private LocalDate thoiGianHetHan;
+    private java.sql.Date thoiGianHetHan;
+
+//    @Column(name = "MaSinhVien")
+//    private Integer maSinhVien;
+
+//    @Column(name = "SoPhong")
+//    private Integer soPhong;
 
     @ManyToOne
     @JoinColumn(name = "MaSinhVien")
-    private Sinhvien maSinhVien;
+    private Sinhvien sinhvien;
 
     @ManyToOne
     @JoinColumn(name = "SoPhong")
-    private Phong soPhong;
+    private Phong phong;
 
-    public Phong getSoPhong() {
-        return soPhong;
-    }
+    @OneToMany(mappedBy = "hopdong", cascade = {CascadeType.ALL})
+    private  List<Phieuthanhtoan> phieuthanhtoans = new ArrayList<>();
 
-    public void setSoPhong(Phong soPhong) {
-        this.soPhong = soPhong;
-    }
-
-    public Sinhvien getMaSinhVien() {
-        return maSinhVien;
-    }
-
-    public void setMaSinhVien(Sinhvien maSinhVien) {
-        this.maSinhVien = maSinhVien;
-    }
-
-    public LocalDate getThoiGianHetHan() {
-        return thoiGianHetHan;
-    }
-
-    public void setThoiGianHetHan(LocalDate thoiGianHetHan) {
-        this.thoiGianHetHan = thoiGianHetHan;
-    }
-
-    public LocalDate getThoiGianChoThue() {
-        return thoiGianChoThue;
-    }
-
-    public void setThoiGianChoThue(LocalDate thoiGianChoThue) {
-        this.thoiGianChoThue = thoiGianChoThue;
-    }
-
-    public String getSDTNguoiLam() {
-        return sDTNguoiLam;
-    }
-
-    public void setSDTNguoiLam(String sDTNguoiLam) {
-        this.sDTNguoiLam = sDTNguoiLam;
-    }
-
-    public String getTenNguoiLam() {
-        return tenNguoiLam;
-    }
-
-    public void setTenNguoiLam(String tenNguoiLam) {
-        this.tenNguoiLam = tenNguoiLam;
-    }
-
-    public LocalDate getNgayHopDong() {
-        return ngayHopDong;
-    }
-
-    public void setNgayHopDong(LocalDate ngayHopDong) {
-        this.ngayHopDong = ngayHopDong;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

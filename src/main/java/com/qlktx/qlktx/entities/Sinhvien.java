@@ -1,22 +1,57 @@
 package com.qlktx.qlktx.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
-@Table(name = "sinhvien")
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Table(name = "sinhvien")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Sinhvien {
     @Id
-    @Column(name = "MaSinhVien", nullable = false)
-    private Integer id;
+    @Column(name = "MaSinhVien")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer maSinhVien;
 
-    public Integer getId() {
-        return id;
-    }
+    @Column(name = "HoTenSinhVien")
+    private String hoTenSinhVien;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @Column(name = "NgaySinh")
+    private java.sql.Date ngaySinh;
+
+    @Column(name = "GioiTinh")
+    private String gioiTinh;
+
+    @Column(name = "CCCD")
+    private String cccd;
+
+    @Column(name = "Lop")
+    private String lop;
+
+    @Column(name = "Khoa")
+    private String khoa;
+
+    @Column(name = "KhoaHoc")
+    private Integer khoaHoc;
+
+    @Column(name = "SDT")
+    private String sdt;
+
+    @Column(name = "Email")
+    private String email;
+
+    @Column(name = "DiaChiThuongTru")
+    private String diaChiThuongTru;
+
+//    @Column(name = "SoPhong")
+//    private Integer soPhong;
+
+    @ManyToOne
+    @JoinColumn(name = "SoPhong")
+    private Phong phong;
+
 }

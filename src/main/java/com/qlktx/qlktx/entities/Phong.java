@@ -1,22 +1,47 @@
 package com.qlktx.qlktx.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
-@Table(name = "phong")
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Table(name = "phong")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Phong {
     @Id
-    @Column(name = "SoPhong", nullable = false)
-    private Integer id;
+    @Column(name = "SoPhong")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer soPhong;
 
-    public Integer getId() {
-        return id;
-    }
+    @Column(name = "TenPhong")
+    private String tenPhong;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @Column(name = "SoTang")
+    private Integer soTang;
+
+    @Column(name = "SoNha")
+    private String soNha;
+
+    @Column(name = "TrangThai")
+    private String trangThai;
+
+//    @Column(name = "MaTrPhong")
+//    private Integer maTrPhong;
+//
+//    @Column(name = "MaLoaiPhong")
+//    private Integer maLoaiPhong;
+
+    @ManyToOne
+    @JoinColumn(name = "MaLoaiPhong")
+    private Loaiphong loaiphong;
+
+    @ManyToOne
+    @JoinColumn(name = "MaTrgPhong")
+    private Sinhvien truongphong;
+
+
 }

@@ -1,67 +1,39 @@
 package com.qlktx.qlktx.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-@Table(name = "ct_suachua", indexes = {
-        @Index(name = "MaThietBi", columnList = "MaThietBi")
-})
 @Entity
+@Table(name = "ct_suachua")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CtSuachua {
-    @EmbeddedId
-    private CtSuachuaId id;
+    @Id
+    @Column(name = "MaCTSuaChua")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer maCtSuaChua;
 
     @Column(name = "TinhTrang")
     private String tinhTrang;
 
     @Column(name = "NgayDiSua")
-    private LocalDate ngayDiSua;
+    private java.sql.Date ngayDiSua;
 
     @Column(name = "NgayNhanVe")
-    private LocalDate ngayNhanVe;
+    private java.sql.Date ngayNhanVe;
 
-    @Column(name = "ChiPhiSua", precision = 10, scale = 2)
-    private BigDecimal chiPhiSua;
+    @Column(name = "ChiPhiSua")
+    private Float chiPhiSua;
 
-    public BigDecimal getChiPhiSua() {
-        return chiPhiSua;
-    }
+    @ManyToOne
+    @JoinColumn(name = "MaThietBi")
+    private Thietbi thietbi;
 
-    public void setChiPhiSua(BigDecimal chiPhiSua) {
-        this.chiPhiSua = chiPhiSua;
-    }
+    @ManyToOne
+    @JoinColumn(name = "MaSoSuaChua")
+    private Sosuachua sosuachua;
 
-    public LocalDate getNgayNhanVe() {
-        return ngayNhanVe;
-    }
-
-    public void setNgayNhanVe(LocalDate ngayNhanVe) {
-        this.ngayNhanVe = ngayNhanVe;
-    }
-
-    public LocalDate getNgayDiSua() {
-        return ngayDiSua;
-    }
-
-    public void setNgayDiSua(LocalDate ngayDiSua) {
-        this.ngayDiSua = ngayDiSua;
-    }
-
-    public String getTinhTrang() {
-        return tinhTrang;
-    }
-
-    public void setTinhTrang(String tinhTrang) {
-        this.tinhTrang = tinhTrang;
-    }
-
-    public CtSuachuaId getId() {
-        return id;
-    }
-
-    public void setId(CtSuachuaId id) {
-        this.id = id;
-    }
 }

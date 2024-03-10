@@ -1,14 +1,20 @@
 package com.qlktx.qlktx.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table(name = "ct_diennuoc", indexes = {
-        @Index(name = "SoPhong", columnList = "SoPhong")
-})
 @Entity
+@Table(name = "ct_diennuoc")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CtDiennuoc {
-    @EmbeddedId
-    private CtDiennuocId id;
+    @Id
+    @Column(name = "MaCTDienNuoc")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer MaCTDienNuoc;
 
     @Column(name = "TenTruongPhong")
     private String tenTruongPhong;
@@ -19,35 +25,12 @@ public class CtDiennuoc {
     @Column(name = "ChiSoNuoc")
     private Integer chiSoNuoc;
 
-    public Integer getChiSoNuoc() {
-        return chiSoNuoc;
-    }
+    @ManyToOne
+    @JoinColumn(name = "SoPhong")
+    private Phong phong;
 
-    public void setChiSoNuoc(Integer chiSoNuoc) {
-        this.chiSoNuoc = chiSoNuoc;
-    }
+    @ManyToOne
+    @JoinColumn(name = "MaSoDienNuoc")
+    private Sodiennuoc sodiennuoc;
 
-    public Integer getChiSoDien() {
-        return chiSoDien;
-    }
-
-    public void setChiSoDien(Integer chiSoDien) {
-        this.chiSoDien = chiSoDien;
-    }
-
-    public String getTenTruongPhong() {
-        return tenTruongPhong;
-    }
-
-    public void setTenTruongPhong(String tenTruongPhong) {
-        this.tenTruongPhong = tenTruongPhong;
-    }
-
-    public CtDiennuocId getId() {
-        return id;
-    }
-
-    public void setId(CtDiennuocId id) {
-        this.id = id;
-    }
 }

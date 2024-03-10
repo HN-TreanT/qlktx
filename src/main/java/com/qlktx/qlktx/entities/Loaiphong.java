@@ -1,16 +1,23 @@
 package com.qlktx.qlktx.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table(name = "loaiphong")
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
+@Table(name = "loaiphong")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Loaiphong {
     @Id
-    @Column(name = "MaLoaiPhong", nullable = false)
-    private Integer id;
+    @Column(name = "MaLoaiPhong")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer maLoaiPhong;
 
     @Column(name = "TenLoaiPhong")
     private String tenLoaiPhong;
@@ -21,35 +28,8 @@ public class Loaiphong {
     @Column(name = "GhiChu")
     private String ghiChu;
 
-    public String getGhiChu() {
-        return ghiChu;
-    }
+//    @OneToMany(mappedBy = "loaiphong", cascade = {CascadeType.ALL})
+//    private List<Phong> phongs  = new ArrayList<>();
 
-    public void setGhiChu(String ghiChu) {
-        this.ghiChu = ghiChu;
-    }
 
-    public Integer getSoLuongNguoi() {
-        return soLuongNguoi;
-    }
-
-    public void setSoLuongNguoi(Integer soLuongNguoi) {
-        this.soLuongNguoi = soLuongNguoi;
-    }
-
-    public String getTenLoaiPhong() {
-        return tenLoaiPhong;
-    }
-
-    public void setTenLoaiPhong(String tenLoaiPhong) {
-        this.tenLoaiPhong = tenLoaiPhong;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

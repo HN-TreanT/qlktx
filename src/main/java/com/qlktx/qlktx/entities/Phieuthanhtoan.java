@@ -2,133 +2,71 @@ package com.qlktx.qlktx.entities;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table(name = "phieuthanhtoan", indexes = {
-        @Index(name = "MaPhieuPhat", columnList = "MaPhieuPhat"),
-        @Index(name = "MaSoSuaChua", columnList = "MaSoSuaChua"),
-        @Index(name = "SoPhong", columnList = "SoPhong"),
-        @Index(name = "MaSoDienNuoc", columnList = "MaSoDienNuoc"),
-        @Index(name = "MaHopDong", columnList = "MaHopDong"),
-        @Index(name = "MaSinhVien", columnList = "MaSinhVien")
-})
 @Entity
+@Table(name = "phieuthanhtoan")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Phieuthanhtoan {
     @Id
-    @Column(name = "MaPhieuThanhToa", nullable = false)
-    private Integer id;
+    @Column(name = "MaPhieuThanhToa")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer maPhieuThanhToa;
 
     @Column(name = "NoiDungThu")
     private String noiDungThu;
 
     @Column(name = "NgayThu")
-    private LocalDate ngayThu;
+    private java.sql.Date ngayThu;
 
-    @Column(name = "SoTien", precision = 10, scale = 2)
-    private BigDecimal soTien;
+    @Column(name = "SoTien")
+    private Float soTien;
 
-    @ManyToOne
-    @JoinColumn(name = "SoPhong")
-    private Phong soPhong;
-
-    @ManyToOne
-    @JoinColumn(name = "MaSinhVien")
-    private Sinhvien maSinhVien;
+//    @Column(name = "SoPhong")
+//    private Integer soPhong;
+//
+//    @Column(name = "MaSinhVien")
+//    private Integer maSinhVien;
+//
+//    @Column(name = "MaHopDong")
+//    private Integer maHopDong;
+//
+//    @Column(name = "MaPhieuPhat")
+//    private Integer maPhieuPhat;
+//
+//    @Column(name = "MaSoSuaChua")
+//    private Integer maSoSuaChua;
+//
+//    @Column(name = "MaSoDienNuoc")
+//    private Integer maSoDienNuoc;
 
     @ManyToOne
     @JoinColumn(name = "MaHopDong")
-    private Hopdong maHopDong;
+    private Hopdong hopdong;
+
+    @ManyToOne
+    @JoinColumn(name = "SoPhong")
+    private Phong phong;
+
+    @ManyToOne
+    @JoinColumn(name = "MaSinhVien")
+    private Sinhvien sinhvien;
 
     @ManyToOne
     @JoinColumn(name = "MaPhieuPhat")
-    private Phieuphat maPhieuPhat;
+    private Phieuphat phieuphat;
 
     @ManyToOne
     @JoinColumn(name = "MaSoSuaChua")
-    private Sosuachua maSoSuaChua;
+    private Sosuachua sosuachua;
 
     @ManyToOne
     @JoinColumn(name = "MaSoDienNuoc")
-    private Sodiennuoc maSoDienNuoc;
+    private Sodiennuoc sodiennuoc;
 
-    public Sodiennuoc getMaSoDienNuoc() {
-        return maSoDienNuoc;
-    }
 
-    public void setMaSoDienNuoc(Sodiennuoc maSoDienNuoc) {
-        this.maSoDienNuoc = maSoDienNuoc;
-    }
-
-    public Sosuachua getMaSoSuaChua() {
-        return maSoSuaChua;
-    }
-
-    public void setMaSoSuaChua(Sosuachua maSoSuaChua) {
-        this.maSoSuaChua = maSoSuaChua;
-    }
-
-    public Phieuphat getMaPhieuPhat() {
-        return maPhieuPhat;
-    }
-
-    public void setMaPhieuPhat(Phieuphat maPhieuPhat) {
-        this.maPhieuPhat = maPhieuPhat;
-    }
-
-    public Hopdong getMaHopDong() {
-        return maHopDong;
-    }
-
-    public void setMaHopDong(Hopdong maHopDong) {
-        this.maHopDong = maHopDong;
-    }
-
-    public Sinhvien getMaSinhVien() {
-        return maSinhVien;
-    }
-
-    public void setMaSinhVien(Sinhvien maSinhVien) {
-        this.maSinhVien = maSinhVien;
-    }
-
-    public Phong getSoPhong() {
-        return soPhong;
-    }
-
-    public void setSoPhong(Phong soPhong) {
-        this.soPhong = soPhong;
-    }
-
-    public BigDecimal getSoTien() {
-        return soTien;
-    }
-
-    public void setSoTien(BigDecimal soTien) {
-        this.soTien = soTien;
-    }
-
-    public LocalDate getNgayThu() {
-        return ngayThu;
-    }
-
-    public void setNgayThu(LocalDate ngayThu) {
-        this.ngayThu = ngayThu;
-    }
-
-    public String getNoiDungThu() {
-        return noiDungThu;
-    }
-
-    public void setNoiDungThu(String noiDungThu) {
-        this.noiDungThu = noiDungThu;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }
