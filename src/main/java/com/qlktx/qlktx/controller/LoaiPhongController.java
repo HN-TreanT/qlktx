@@ -38,10 +38,8 @@ public class LoaiPhongController {
     }
 
     @PutMapping("/delete/{maLoaiPhong}")
-    public  ResponseEntity<Object> edit(@PathVariable Integer maLoaiPhong) {
+    public  ResponseEntity<Object> delete(@PathVariable Integer maLoaiPhong) {
         return ResponseEntity.ok(loaiPhongService.delete(maLoaiPhong));
     }
-
-
 
 }

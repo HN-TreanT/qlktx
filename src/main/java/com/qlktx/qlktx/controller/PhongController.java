@@ -1,9 +1,8 @@
 package com.qlktx.qlktx.controller;
 
-import com.qlktx.qlktx.dto.LoaiPhongDTO;
-import com.qlktx.qlktx.entities.Loaiphong;
-import com.qlktx.qlktx.payloads.APIResponse;
-import com.qlktx.qlktx.services.LoaiPhongService;
+import com.qlktx.qlktx.dto.PhongDTO;
+import com.qlktx.qlktx.entities.Phong;
+import com.qlktx.qlktx.services.PhongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,34 +11,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/loaiphong")
-public class LoaiPhongController {
+@RequestMapping("api/v1/phong")
+public class PhongController {
     @Autowired
-    private  LoaiPhongService loaiPhongService;
+    private  PhongService PhongService;
     @GetMapping("")
-    public ResponseEntity<List<Loaiphong>> list(
+    public ResponseEntity<List<Phong>> list(
             @RequestParam(name = "page",required = false,defaultValue = "1") int page,
             @RequestParam(name = "limit",required = false,defaultValue = "10") int limit,
-            @RequestParam(name = "tenLoaiPhong",required = false) String tenLoaiPhong,
-            @RequestParam(name = "soLuongNguoi",required = false) Integer soLuongNguoi
+            @RequestParam(name = "soPhong",required = false) Integer soPhong,
+            @RequestParam(name = "soNha",required = false) String soNha,
+            @RequestParam(name = "trangThai",required = false) String trangThai
     ) {
-        List<Loaiphong> res = loaiPhongService.list(tenLoaiPhong, soLuongNguoi);
-        return  new ResponseEntity<List<Loaiphong>>(res, HttpStatus.OK);
+        List<Phong> res = PhongService.list(soPhong, soNha, trangThai);
+        return  new ResponseEntity<List<Phong>>(res, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> create(@RequestBody LoaiPhongDTO dto) {
-        return ResponseEntity.ok(loaiPhongService.create(dto));
+    public ResponseEntity<Object> create(@RequestBody PhongDTO dto) {
+        return ResponseEntity.ok(PhongService.create(dto));
     }
 
-    @PutMapping("/edit/{maLoaiPhong}")
-    public  ResponseEntity<Object> edit(@PathVariable Integer maLoaiPhong, @RequestBody LoaiPhongDTO dto) {
-        return ResponseEntity.ok(loaiPhongService.edit(maLoaiPhong, dto));
+    @PutMapping("/edit/{soPhong}")
+    public  ResponseEntity<Object> edit(@PathVariable Integer soPhong, @RequestBody PhongDTO dto) {
+        return ResponseEntity.ok(PhongService.edit(soPhong, dto));
     }
 
-    @PutMapping("/delete/{maLoaiPhong}")
-    public  ResponseEntity<Object> edit(@PathVariable Integer maLoaiPhong) {
-        return ResponseEntity.ok(loaiPhongService.delete(maLoaiPhong));
+    @PutMapping("/delete/{soPhong}")
+    public  ResponseEntity<Object> delete(@PathVariable Integer soPhong) {
+        return ResponseEntity.ok(PhongService.delete(soPhong));
     }
 
 }

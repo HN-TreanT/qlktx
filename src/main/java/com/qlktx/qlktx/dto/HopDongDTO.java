@@ -5,30 +5,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.qlktx.qlktx.entities.Sinhvien;
+import com.qlktx.qlktx.entities.Nguoidung;
+import com.qlktx.qlktx.entities.Phong;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class PhongDTO {
-    @NotBlank(message = "Tên phòng không được bỏ trống")
-    private String tenPhong;
+public class HopDongDTO {
 
-    @NotBlank(message = "Số tầng không được bỏ trống")
-    private Integer soTang;
+        private String tenPhong;
 
-    @NotBlank(message = "Số phòng không được bỏ trống")
-    private Integer soPhong;
+        private String trangThai;
 
-    @NotBlank(message = "Số nhà không được bỏ trống")
-    private String soNha;
+        private java.sql.Date ngayHopDong;
 
-    @NotBlank(message = "Trạng thái không được bỏ trống")
-    private String trangThai;
+        private java.sql.Date thoiGianChoThue;
 
-    @NotBlank(message = "Loại phòng không được bỏ trống")
-    private Integer maLoaiPhong;
+        private java.sql.Date thoiGianHetHan;
 
-    private Integer maTruongPhong;
+        @NotBlank(message = "Sinh viên không được bỏ trống")
+        private Sinhvien maSinhVien;
 
-}
+        private Nguoidung maNV;
+
+        private Phong soPhong;
+    }

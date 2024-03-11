@@ -23,12 +23,15 @@ public class Hopdong {
 
     @Column(name = "NgayHopDong")
     private java.sql.Date ngayHopDong;
+//
+//    @Column(name = "TenNguoiLam")
+//    private String tenNguoiLam;
+//
+//    @Column(name = "SDTNguoiLam")
+//    private String sdtNguoiLam;
 
-    @Column(name = "TenNguoiLam")
-    private String tenNguoiLam;
-
-    @Column(name = "SDTNguoiLam")
-    private String sdtNguoiLam;
+    @Column(name = "TrangThai")
+    private String trangThai;
 
     @Column(name = "ThoiGianChoThue")
     private java.sql.Date thoiGianChoThue;
@@ -45,6 +48,10 @@ public class Hopdong {
     @ManyToOne
     @JoinColumn(name = "MaSinhVien")
     private Sinhvien sinhvien;
+
+    @OneToOne
+    @JoinColumn(name = "MaNV")
+    private Nguoidung nguoidung;
 
     @ManyToOne
     @JoinColumn(name = "SoPhong")

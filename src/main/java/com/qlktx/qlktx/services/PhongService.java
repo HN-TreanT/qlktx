@@ -1,16 +1,15 @@
 package com.qlktx.qlktx.services;
 
-import com.qlktx.qlktx.dto.LoaiPhongDTO;
-import com.qlktx.qlktx.entities.Loaiphong;
+import com.qlktx.qlktx.dto.PhongDTO;
+import com.qlktx.qlktx.entities.Phong;
 import com.qlktx.qlktx.payloads.APIResponse;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface LoaiPhongService {
-    List<Loaiphong> list(String tenLoaiPhong, Integer soNguoi);
-    APIResponse create(LoaiPhongDTO dto);
-    APIResponse edit(Integer maLoaiPhong, LoaiPhongDTO dto);
-    APIResponse delete(Integer maLoaiPhong);
+public interface PhongService {
+    List<Phong> list( Integer soPhong, String soNha, String trangThai);
+    APIResponse create(PhongDTO dto);
+    APIResponse edit(Integer maPhong, PhongDTO dto);
+    APIResponse delete(Integer maPhong);
 
 }

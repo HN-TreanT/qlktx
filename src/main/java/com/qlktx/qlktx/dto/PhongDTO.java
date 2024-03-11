@@ -1,19 +1,36 @@
 package com.qlktx.qlktx.dto;
 
+import com.qlktx.qlktx.entities.Loaiphong;
+import com.qlktx.qlktx.entities.Sinhvien;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoaiPhongDTO {
-    @NotBlank(message = "tên loại phòng k bỏ trống")
-    private  String tenLoaiPhong;
 
-    @NotBlank(message = "số lượng người k đc trống")
-    private Integer soLuongNguoi;
+public class PhongDTO {
+    @NotBlank(message = "Tên phòng không được bỏ trống")
+    private String tenPhong;
 
-    private String ghichu;
+    @NotBlank(message = "Số tầng không được bỏ trống")
+    private Integer soTang;
+
+    @NotBlank(message = "Số phòng không được bỏ trống")
+    private Integer soPhong;
+
+    @NotBlank(message = "Số nhà không được bỏ trống")
+    private String soNha;
+
+    @NotBlank(message = "Trạng thái không được bỏ trống")
+    private String trangThai;
+
+    @NotBlank(message = "Loại phòng không được bỏ trống")
+    private Loaiphong maLoaiPhong;
+
+    private Sinhvien maTruongPhong;
+
 }
