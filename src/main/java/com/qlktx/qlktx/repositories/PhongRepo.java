@@ -8,7 +8,7 @@
 
     @Repository
 
-    public interface PhongRepo extends JpaRepository<Phong, Long> {
+    public interface PhongRepo extends JpaRepository<Phong, Integer> {
         Phong findBySoPhong(Integer soPhong);
         List<Phong> findBySoPhongAndSoNhaAndTrangThai(Integer soPhong, String soNha, String trangThai);
 

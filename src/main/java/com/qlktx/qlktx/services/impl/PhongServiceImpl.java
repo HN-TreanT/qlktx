@@ -34,8 +34,8 @@ import com.qlktx.qlktx.dto.PhongDTO;
         }
 
         @Override
-        public APIResponse create(Loaiphong maLoaiPhong, PhongDTO dto) {
-            Loaiphong optionalLoaiPhong = loaiPhongRepo.getReferene(maLoaiPhong);
+        public APIResponse create(PhongDTO dto) {
+            Loaiphong optionalLoaiPhong = loaiPhongRepo.getReferenceById(dto.getMaLoaiPhong());
 
             Phong phong = modelMapper.map(dto, Phong.class);
             phong.setLoaiphong(optionalLoaiPhong);

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface LoaiPhongRepo extends JpaRepository<Loaiphong, Long> {
+public interface LoaiPhongRepo extends JpaRepository<Loaiphong, Integer> {
     Loaiphong findByMaLoaiPhong(Integer maLoaiPhong);
     List<Loaiphong> findByTenLoaiPhongLikeAndSoLuongNguoi(String tenLoaiPhong, Integer  soLuongNguoi);
     public  void  deleteLoaiphongByMaLoaiPhong(Integer maLoaiPhong);

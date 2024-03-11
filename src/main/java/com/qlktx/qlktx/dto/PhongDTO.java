@@ -29,8 +29,10 @@ public class PhongDTO {
     private String trangThai;
 
     @NotBlank(message = "Loại phòng không được bỏ trống")
-    private Loaiphong maLoaiPhong;
+//    private Loaiphong maLoaiPhong;
+     private  Integer maLoaiPhong;
 
-    private Sinhvien maTruongPhong;
+//    private Sinhvien maTruongPhong;
 
+    private  Integer maTruongPhong;
 }

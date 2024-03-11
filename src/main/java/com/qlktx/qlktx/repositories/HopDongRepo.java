@@ -9,9 +9,9 @@
 
     @Repository
 
-    public interface HopDongRepo extends JpaRepository<Hopdong, Long> {
-        Hopdong findByMaSinhVien(Integer maSinhVien);
-        List<Phong> findByMaSinhVienAndMaNV(Integer maSinhVien, Integer maNV);
-
-        public  void deleteByMaHopDong(Integer MaHopDong);
+    public interface HopDongRepo extends JpaRepository<Hopdong, Integer> {
+//        Hopdong findByMaSinhVien(Integer maSinhVien);
+//        List<Phong> findByMaSinhVienAndMaNV(Integer maSinhVien, Integer maNV);
+//
+//        public  void deleteByMaHopDong(Integer MaHopDong);
     }
