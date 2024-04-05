@@ -26,10 +26,11 @@ public class HopDongDTO {
 
         private java.sql.Date thoiGianHetHan;
 
-        @NotBlank(message = "Sinh viên không được bỏ trống")
-        private Sinhvien maSinhVien;
+        private Integer maSinhVien;
 
-        private Nguoidung maNV;
+        private Integer tienCoc;
 
-        private Phong soPhong;
+        private Integer maNV;
+
+        private Integer soPhong;
     }

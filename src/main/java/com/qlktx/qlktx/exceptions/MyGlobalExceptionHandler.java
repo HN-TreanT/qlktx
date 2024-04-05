@@ -22,7 +22,7 @@ public class MyGlobalExceptionHandler {
     public ResponseEntity<APIResponse> myResourceNotFoundException(ResourceNotFoundException e) {
         String message = e.getMessage();
 
-        APIResponse res = new APIResponse(message, false);
+        APIResponse res = new APIResponse(message, false, "");
 
         return new ResponseEntity<APIResponse>(res, HttpStatus.NOT_FOUND);
     }
@@ -31,7 +31,7 @@ public class MyGlobalExceptionHandler {
     public ResponseEntity<APIResponse> myAPIException(APIException e) {
         String message = e.getMessage();
 
-        APIResponse res = new APIResponse(message, false);
+        APIResponse res = new APIResponse(message, false, "");
 
         return new ResponseEntity<APIResponse>(res, HttpStatus.BAD_REQUEST);
     }
@@ -75,14 +75,14 @@ public class MyGlobalExceptionHandler {
 
     @ExceptionHandler(MissingPathVariableException.class)
     public ResponseEntity<APIResponse> myMissingPathVariableException(MissingPathVariableException e) {
-        APIResponse res = new APIResponse(e.getMessage(), false);
+        APIResponse res = new APIResponse(e.getMessage(), false, "");
 
         return new ResponseEntity<APIResponse>(res, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<APIResponse> myDataIntegrityException(DataIntegrityViolationException e) {
-        APIResponse res = new APIResponse(e.getMessage(), false);
+        APIResponse res = new APIResponse(e.getMessage(), false, "");
 
         return new ResponseEntity<APIResponse>(res, HttpStatus.BAD_REQUEST);
     }

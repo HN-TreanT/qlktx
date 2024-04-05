@@ -32,14 +32,14 @@ public  class LoaiPhongServiceImpl implements LoaiPhongService {
     public APIResponse create(LoaiPhongDTO dto) {
         Loaiphong loaiPhong =modelMapper.map(dto, Loaiphong.class);
         loaiPhongRepo.save(loaiPhong);
-        return new APIResponse("success created", true);
+        return new APIResponse("success created", true, loaiPhong);
     }
 
     @Override
     @Transactional
     public APIResponse edit(Integer maLoaiPhong, LoaiPhongDTO dto) {
         Loaiphong loaiphong = loaiPhongRepo.findByMaLoaiPhong(maLoaiPhong);
-        if(loaiphong == null) return new APIResponse("not found", false);
+        if(loaiphong == null) return new APIResponse("not found", false, "");
 //        Loaiphong maploaiphong  = modelMapper.map(dto, loaiphong.getClass());
         loaiphong.setTenLoaiPhong(dto.getTenLoaiPhong());
         loaiphong.setGhiChu(dto.getGhichu());
@@ -52,8 +52,8 @@ public  class LoaiPhongServiceImpl implements LoaiPhongService {
     @Transactional
     public APIResponse delete(Integer maLoaiPhong) {
         Loaiphong loaiphong = loaiPhongRepo.findByMaLoaiPhong(maLoaiPhong);
-        if(loaiphong == null) return new APIResponse("not found", false);
+        if(loaiphong == null) return new APIResponse("not found", false, "");
         loaiPhongRepo.deleteLoaiphongByMaLoaiPhong(maLoaiPhong);
-        return new APIResponse("delete success", true);
+        return new APIResponse("delete success", true, "");
     }
 }

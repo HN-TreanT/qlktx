@@ -24,6 +24,16 @@ public class Dondangky {
 
     @Column(name = "HoTenSinhVien")
     private String hoTenSinhVien;
+
+    @Column(name = "TrangThai")
+    private String trangThai;
+
+    @Column(name = "LoaiPhong")
+    private String loaiPhong;
+
+    @Column(name = "SoThang")
+    private Integer soThang;
+
     @ManyToOne
     @JoinColumn(name = "MaSinhVien")
     private Sinhvien sinhvien;

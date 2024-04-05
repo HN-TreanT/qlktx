@@ -9,7 +9,8 @@
     @Repository
 
     public interface PhongRepo extends JpaRepository<Phong, Integer> {
-        Phong findBySoPhong(Integer soPhong);
+        Phong findBySoPhong(Integer loaiPhong);
+//        Phong findByLoaiphong(Integer maLoaiPhong);
         List<Phong> findBySoPhongAndSoNhaAndTrangThai(Integer soPhong, String soNha, String trangThai);
 
         public  void deleteBySoPhong(Integer soPhong);

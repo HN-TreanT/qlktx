@@ -26,6 +26,9 @@ public class Phong {
     @Column(name = "SoNha")
     private String soNha;
 
+    @Column(name = "SoNguoiO")
+    private Integer soNguoiO;
+
     @Column(name = "TrangThai")
     private String trangThai;
 
