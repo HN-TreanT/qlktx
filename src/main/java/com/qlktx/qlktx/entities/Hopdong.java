@@ -39,11 +39,9 @@ public class Hopdong {
     @Column(name = "ThoiGianHetHan")
     private java.sql.Date thoiGianHetHan;
 
-//    @Column(name = "MaSinhVien")
-//    private Integer maSinhVien;
+    @Column(name = "TienCoc")
+    private Integer tienCoc;
 
-//    @Column(name = "SoPhong")
-//    private Integer soPhong;
 
     @ManyToOne
     @JoinColumn(name = "MaSinhVien")

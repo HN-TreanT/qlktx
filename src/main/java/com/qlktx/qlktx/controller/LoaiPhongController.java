@@ -2,8 +2,11 @@ package com.qlktx.qlktx.controller;
 
 import com.qlktx.qlktx.dto.LoaiPhongDTO;
 import com.qlktx.qlktx.entities.Loaiphong;
+import com.qlktx.qlktx.entities.Phong;
 import com.qlktx.qlktx.payloads.APIResponse;
+import com.qlktx.qlktx.repositories.PhongRepo;
 import com.qlktx.qlktx.services.LoaiPhongService;
+import com.qlktx.qlktx.services.PhongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,10 @@ import java.util.List;
 public class LoaiPhongController {
     @Autowired
     private  LoaiPhongService loaiPhongService;
+
+    @Autowired
+    private PhongService phongService;
+
     @GetMapping("")
     public ResponseEntity<List<Loaiphong>> list(
             @RequestParam(name = "page",required = false,defaultValue = "1") int page,
@@ -26,6 +33,12 @@ public class LoaiPhongController {
         List<Loaiphong> res = loaiPhongService.list(tenLoaiPhong, soLuongNguoi);
         return  new ResponseEntity<List<Loaiphong>>(res, HttpStatus.OK);
     }
+
+//    @GetMapping("/phongs/{maLoaiPhong}")
+//    public ResponseEntity<List<Phong>> getPhongsByLoaiPhong(@PathVariable Integer maLoaiPhong) {
+//        List<Phong> phongs = PhongRepo.findByLoaiphong(maLoaiPhong);
+//        return new ResponseEntity<>(phongs, HttpStatus.OK);
+//    }
 
     @PostMapping("/add")
     public ResponseEntity<Object> create(@RequestBody LoaiPhongDTO dto) {

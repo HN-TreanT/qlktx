@@ -22,13 +22,15 @@ public class PhongDTO {
     @NotBlank(message = "Số phòng không được bỏ trống")
     private Integer soPhong;
 
+    private Integer soNguoiO;
+
     @NotBlank(message = "Số nhà không được bỏ trống")
     private String soNha;
 
     @NotBlank(message = "Trạng thái không được bỏ trống")
     private String trangThai;
 
-    @NotBlank(message = "Loại phòng không được bỏ trống")
+
 //    private Loaiphong maLoaiPhong;
      private  Integer maLoaiPhong;
 

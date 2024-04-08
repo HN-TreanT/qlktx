@@ -12,7 +12,6 @@ import com.qlktx.qlktx.dto.PhongDTO;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
-    import java.util.Optional;
 
     import java.util.List;
 
@@ -20,7 +19,6 @@ import com.qlktx.qlktx.dto.PhongDTO;
     public class PhongServiceImpl implements PhongService {
         @Autowired
         private PhongRepo phongRepo;
-
         @Autowired
         private LoaiPhongRepo loaiPhongRepo;
 
@@ -32,18 +30,18 @@ import com.qlktx.qlktx.dto.PhongDTO;
             List<Phong> danhSachPhongs = phongRepo.findAll();
             return danhSachPhongs;
         }
-
         @Override
         public APIResponse create(PhongDTO dto) {
             Loaiphong optionalLoaiPhong = loaiPhongRepo.getReferenceById(dto.getMaLoaiPhong());
 
             Phong phong = modelMapper.map(dto, Phong.class);
-            phong.setLoaiphong(optionalLoaiPhong);
-
+            // Lưu phòng mới vào cơ sở dữ liệu
             phongRepo.save(phong);
 
-            return new APIResponse("success created", true);
+            // Trả về APIResponse thông báo thành công
+            return new APIResponse("success created", true, phong);
         }
+
 
         @Override
         @Transactional
@@ -52,7 +50,7 @@ import com.qlktx.qlktx.dto.PhongDTO;
             Phong phong = phongRepo.findBySoPhong(soPhong);
             if (phong == null) {
                 // Nếu không tìm thấy phòng, trả về thông báo lỗi
-                return new APIResponse("Không tìm thấy phòng", false);
+                return new APIResponse("Không tìm thấy phòng", false, "");
             }
 
             // Cập nhật thông tin của phòng dựa trên DTO
@@ -66,7 +64,7 @@ import com.qlktx.qlktx.dto.PhongDTO;
             phongRepo.save(phong);
 
             // Trả về thông báo thành công
-            return new APIResponse("Chỉnh sửa phòng thành công", true);
+            return new APIResponse("Chỉnh sửa phòng thành công", true,phong);
         }
 
         @Override
@@ -76,13 +74,13 @@ import com.qlktx.qlktx.dto.PhongDTO;
             Phong phong = phongRepo.findBySoPhong(soPhong);
             if (phong == null) {
                 // Nếu không tìm thấy phòng, trả về thông báo lỗi
-                return new APIResponse("Không tìm thấy phòng", false);
+                return new APIResponse("Không tìm thấy phòng", false, "");
             }
 
             // Xóa phòng khỏi cơ sở dữ liệu
             phongRepo.delete(phong);
 
             // Trả về thông báo thành công
-            return new APIResponse("Xóa phòng thành công", true);
+            return new APIResponse("Xóa phòng thành công", true,"");
         }
     }
