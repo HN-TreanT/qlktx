@@ -27,7 +27,7 @@ public class Nguoidung {
     @Column(name = "CCCD")
     private String cccd;
 
-    @Column(name = "TenDangNhap")
+    @Column(name = "TenDangNhap", unique = true)
     private String tenDangNhap;
 
     @Column(name = "MatKhau")

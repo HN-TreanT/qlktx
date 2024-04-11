@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
@@ -64,14 +65,34 @@ public class MyGlobalExceptionHandler {
         return new ResponseEntity<Map<String, String>>(res, HttpStatus.BAD_REQUEST);
     }
 
-    // @ExceptionHandler(AuthenticationException.class)
-    // public ResponseEntity<String>
-    // myAuthenticationException(AuthenticationException e) {
-    //
-    // String res = e.getMessage();
-    //
-    // return new ResponseEntity<String>(res, HttpStatus.BAD_REQUEST);
-    // }
+//    @ExceptionHandler(AuthorizationEx.class)
+
+//     @ExceptionHandler(AuthenticationException.class)
+//     public ResponseEntity<String>
+//     myAuthenticationException(AuthenticationException e) {
+//
+//     String res = e.getMessage();
+//
+//     return new ResponseEntity<String>(res, HttpStatus.UNAUTHORIZED);
+//     }
+//
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<String>
+    myAuthenticationException(AuthenticationException e) {
+
+        String res = e.getMessage();
+
+        return new ResponseEntity<String>(res, HttpStatus.UNAUTHORIZED);
+    }
+
+//    @ExceptionHandler(Ex.class)
+//    public ResponseEntity<String>
+//    myAuthenticationException(AuthenticationException e) {
+//
+//        String res = e.getMessage();
+//
+//        return new ResponseEntity<String>(res, HttpStatus.UNAUTHORIZED);
+//    }
 
     @ExceptionHandler(MissingPathVariableException.class)
     public ResponseEntity<APIResponse> myMissingPathVariableException(MissingPathVariableException e) {

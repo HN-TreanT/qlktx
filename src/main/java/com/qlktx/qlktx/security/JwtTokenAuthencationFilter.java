@@ -1,51 +1,68 @@
 package com.qlktx.qlktx.security;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
-import javax.xml.crypto.AlgorithmMethod;
-
-import org.hibernate.mapping.Map;
+import com.qlktx.qlktx.services.impl.UserServices;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.util.StringUtils;
 
+@Slf4j
 public class JwtTokenAuthencationFilter extends OncePerRequestFilter {
-    private JwtConfig jwtConfig;
+    @Autowired
+    private UserServices userServices;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        String header = request.getHeader(jwtConfig.getHeader());
-        chain.doFilter(request, response);
 
-        if (header == null || !header.startsWith(jwtConfig.getPrefix())) {
-            chain.doFilter(request, response);
-            return;
+        try {
+            System.out.println("check authorize");
+            final String authHeader = request.getHeader("Authorization");
+//            chain.doFilter(request, response);
+
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                chain.doFilter(request, response);
+                return;
+            }
+            String jwt = getJwtFromRequest(request);
+            if(StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
+                String username = jwtTokenProvider.getUsernameFromJWT(jwt);
+                UserDetails userDetails = userServices.loadUserByUsername(username);
+                if( userDetails != null) {
+                    UsernamePasswordAuthenticationToken authentication
+                            = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }
+
+
+        } catch (Exception ex) {
+            log.error("failed on set user authentication", ex);
         }
-
-        String token = header.replace(jwtConfig.getPrefix(), "");
+        chain.doFilter(request, response);
         // Algorithm alogorithm = Algo
 
     }
 
-    // private Map getClaim
-
-    // private boolean isTokenExpired(String token) {
-    // if(token.equals("") || token.equals(null)) return false;
-    // Map claims;
-    // try {
-
-    // } catch (Exception e) {
-    // return false;
-    // }
-    // BigDecimal a = new BigDecimal(claims.get("exp").toString());
-    // long timeExpired = a.longValueExact() * 1000;
-    // long timeNow = System.currentTimeMillis();
-    // if(timeExpired <= timeNow) return true;
-    // return false;
-    // }
+    private String getJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
 }
