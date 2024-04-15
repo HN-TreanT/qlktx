@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "sodiennuoc")
 @Data
@@ -30,7 +32,7 @@ public class Sodiennuoc {
     private Integer chiSoNuoc;
 
     @Column(name = "Thang")
-    private java.sql.Date thang;
+    private LocalDateTime thang;
 
 //    @Column(name = "SoPhong")
 //    private Integer soPhong;

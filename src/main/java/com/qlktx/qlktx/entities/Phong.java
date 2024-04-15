@@ -29,14 +29,8 @@ public class Phong {
     @Column(name = "SoNguoiO")
     private Integer soNguoiO;
 
-    @Column(name = "TrangThai")
-    private String trangThai;
-
-//    @Column(name = "MaTrPhong")
-//    private Integer maTrPhong;
-//
-//    @Column(name = "MaLoaiPhong")
-//    private Integer maLoaiPhong;
+    @Column(name = "trang_thai")
+    private Integer trangThai;
 
     @ManyToOne
     @JoinColumn(name = "MaLoaiPhong")

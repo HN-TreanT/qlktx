@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Phieuphat {
     private Integer maPhieuPhat;
 
     @Column(name = "NgayLapPhieu")
-    private java.sql.Date ngayLapPhieu;
+    private LocalDateTime ngayLapPhieu;
 
     @Column(name = "SoLuong")
     private Integer soLuong;

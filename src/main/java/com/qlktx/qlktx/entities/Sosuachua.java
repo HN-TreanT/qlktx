@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "sosuachua")
 @Data
@@ -26,10 +28,10 @@ public class Sosuachua {
     private String tinhTrang;
 
     @Column(name = "NgayDiSua")
-    private java.sql.Date ngayDiSua;
+    private LocalDateTime ngayDiSua;
 
     @Column(name = "NgayNhanVe")
-    private java.sql.Date ngayNhanVe;
+    private LocalDateTime ngayNhanVe;
 
     @Column(name = "PhiSuaChua")
     private Float phiSuaChua;

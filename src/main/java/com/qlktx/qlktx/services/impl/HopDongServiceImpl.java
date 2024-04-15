@@ -16,10 +16,17 @@ import com.qlktx.qlktx.services.HopDongService;
 import com.qlktx.qlktx.services.LoaiPhongService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public  class HopDongServiceImpl implements HopDongService {
@@ -36,12 +43,18 @@ public  class HopDongServiceImpl implements HopDongService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<Hopdong> list(String trangThai) {
-        if (trangThai != null) {
-            return hopDongRepo.findByTrangThai(trangThai);
-        } else {
-            return hopDongRepo.findAll();
-        }
+    public ResponseEntity<Map<String, Object>> list(String tenSinhvien, String trangThai, String timeStart, String timeEnd, int page, int limit) {
+        Pageable pageable = PageRequest.of(page -1, limit);
+        LocalDateTime start = timeStart != null ? LocalDateTime.parse(timeStart) : null;
+        LocalDateTime end = timeEnd != null ? LocalDateTime.parse(timeEnd) : null;
+        Page<Hopdong> list = hopDongRepo.getHopDong(tenSinhvien, trangThai, start, end, pageable );
+        Map<String, Object> response = new HashMap<>();
+        response.put("page", pageable.getPageNumber() + 1);
+        response.put("limit", pageable.getPageSize());
+        response.put("totalElements", list.getTotalElements());
+        response.put("totalPage", list.getTotalPages());
+        response.put("data", list.getContent());
+        return  ResponseEntity.ok(response);
     }
 
     @Override

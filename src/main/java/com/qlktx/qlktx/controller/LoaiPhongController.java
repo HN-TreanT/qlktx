@@ -25,20 +25,11 @@ public class LoaiPhongController {
 
     @GetMapping("")
     public ResponseEntity<List<Loaiphong>> list(
-            @RequestParam(name = "page",required = false,defaultValue = "1") int page,
-            @RequestParam(name = "limit",required = false,defaultValue = "10") int limit,
-            @RequestParam(name = "tenLoaiPhong",required = false) String tenLoaiPhong,
-            @RequestParam(name = "soLuongNguoi",required = false) Integer soLuongNguoi
     ) {
-        List<Loaiphong> res = loaiPhongService.list(tenLoaiPhong, soLuongNguoi);
+        List<Loaiphong> res = loaiPhongService.list();
         return  new ResponseEntity<List<Loaiphong>>(res, HttpStatus.OK);
     }
 
-//    @GetMapping("/phongs/{maLoaiPhong}")
-//    public ResponseEntity<List<Phong>> getPhongsByLoaiPhong(@PathVariable Integer maLoaiPhong) {
-//        List<Phong> phongs = PhongRepo.findByLoaiphong(maLoaiPhong);
-//        return new ResponseEntity<>(phongs, HttpStatus.OK);
-//    }
 
     @PostMapping("/add")
     public ResponseEntity<Object> create(@RequestBody LoaiPhongDTO dto) {
@@ -50,7 +41,7 @@ public class LoaiPhongController {
         return ResponseEntity.ok(loaiPhongService.edit(maLoaiPhong, dto));
     }
 
-    @PutMapping("/delete/{maLoaiPhong}")
+    @DeleteMapping("/delete/{maLoaiPhong}")
     public  ResponseEntity<Object> delete(@PathVariable Integer maLoaiPhong) {
         return ResponseEntity.ok(loaiPhongService.delete(maLoaiPhong));
     }

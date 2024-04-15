@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface LoaiPhongService {
-    List<Loaiphong> list(String tenLoaiPhong, Integer soNguoi);
+    List<Loaiphong> list();
     APIResponse create(LoaiPhongDTO dto);
     APIResponse edit(Integer maLoaiPhong, LoaiPhongDTO dto);
     APIResponse delete(Integer maLoaiPhong);

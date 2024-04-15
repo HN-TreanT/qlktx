@@ -1,7 +1,11 @@
     package com.qlktx.qlktx.repositories;
 
     import com.qlktx.qlktx.entities.Phong;
+    import org.springframework.data.domain.Page;
+    import org.springframework.data.domain.Pageable;
     import org.springframework.data.jpa.repository.JpaRepository;
+    import org.springframework.data.jpa.repository.Query;
+    import org.springframework.data.repository.query.Param;
     import org.springframework.stereotype.Repository;
 
     import java.util.List;
@@ -10,8 +14,14 @@
 
     public interface PhongRepo extends JpaRepository<Phong, Integer> {
         Phong findBySoPhong(Integer loaiPhong);
-//        Phong findByLoaiphong(Integer maLoaiPhong);
-        List<Phong> findBySoPhongAndSoNhaAndTrangThai(Integer soPhong, String soNha, String trangThai);
+        @Query("select p from Phong p  where " +
+                "(:soTang is null  or p.soTang = :soTang) and " +
+                "(:soNha is null  or p.soNha = :soNha)  and " +
+                "(:trangThai is null  or p.trangThai = :trangThai) and " +
+                "(:tenPhong is null  or p.tenPhong = :tenPhong) ")
+        Page<Phong> getListPhong(@Param("soTang") Integer soTang,
+                                 @Param("soNha") String soNha,
+                                 @Param("tenPhong") String tenPhong,
+                                 @Param("trangThai") Integer trangThai, Pageable pageable);
 
-        public  void deleteBySoPhong(Integer soPhong);
     }

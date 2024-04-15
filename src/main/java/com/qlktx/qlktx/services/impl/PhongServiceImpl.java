@@ -1,5 +1,6 @@
 package com.qlktx.qlktx.services.impl;
 
+import com.qlktx.qlktx.Converter.PhongConverter;
 import com.qlktx.qlktx.dto.LoaiPhongDTO;
 import com.qlktx.qlktx.dto.PhongDTO;
     import com.qlktx.qlktx.entities.Phong;
@@ -8,14 +9,25 @@ import com.qlktx.qlktx.dto.PhongDTO;
     import com.qlktx.qlktx.repositories.PhongRepo;
     import com.qlktx.qlktx.repositories.LoaiPhongRepo;
     import com.qlktx.qlktx.services.PhongService;
-    import org.modelmapper.ModelMapper;
+import org.hibernate.Hibernate;
+import org.modelmapper.ModelMapper;
     import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
 
-    import java.util.List;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-    @Service
+@Service
     public class PhongServiceImpl implements PhongService {
         @Autowired
         private PhongRepo phongRepo;
@@ -23,64 +35,62 @@ import com.qlktx.qlktx.dto.PhongDTO;
         private LoaiPhongRepo loaiPhongRepo;
 
         @Autowired
+        private PhongConverter phongConverter;
+
+        @Autowired
         private ModelMapper modelMapper;
 
         @Override
-        public List<Phong> list(Integer soPhong, String soNha, String trangThai) {
-            List<Phong> danhSachPhongs = phongRepo.findAll();
-            return danhSachPhongs;
+        public ResponseEntity<Map<String, Object>> list(Integer soTang, String soNha, String tenPhong, Integer trangThai, int page, int limit) {
+            Pageable pageable = PageRequest.of(page -1 , limit, Sort.by("tenPhong"));
+            Page<Phong> danhSachPhongs = phongRepo.getListPhong(soTang, soNha, tenPhong, trangThai, pageable);
+            Map<String, Object> response = new HashMap<>();
+            response.put("page", pageable.getPageNumber() + 1);
+            response.put("limit", pageable.getPageSize());
+            response.put("totalElements", danhSachPhongs.getTotalElements());
+            response.put("totalPage", danhSachPhongs.getTotalPages());
+            response.put("data", danhSachPhongs.getContent());
+            return  ResponseEntity.ok(response);
         }
         @Override
-        public APIResponse create(PhongDTO dto) {
-            Loaiphong optionalLoaiPhong = loaiPhongRepo.getReferenceById(dto.getMaLoaiPhong());
+        public ResponseEntity<Object> create(PhongDTO dto) {
+            Optional<Loaiphong> optionalLoaiPhong = Optional.of(loaiPhongRepo.getReferenceById(dto.getMaLoaiPhong()));
+            if (!optionalLoaiPhong.isPresent())  return new ResponseEntity<>("Không tìm thấy loại phòng", HttpStatus.NOT_FOUND);
 
-            Phong phong = modelMapper.map(dto, Phong.class);
-            // Lưu phòng mới vào cơ sở dữ liệu
+            Phong phong = phongConverter.toEntity(dto);
+            phong.setLoaiphong(optionalLoaiPhong.get());
             phongRepo.save(phong);
-
-            // Trả về APIResponse thông báo thành công
-            return new APIResponse("success created", true, phong);
+            APIResponse resposne = new APIResponse("Thêm mới phòng thành công", true, null);
+            return new ResponseEntity<>(resposne, HttpStatus.CREATED);
         }
 
 
         @Override
         @Transactional
-        public APIResponse edit(Integer soPhong, PhongDTO dto) {
+        public ResponseEntity<Object> edit(Integer soPhong, PhongDTO dto) {
             // Tìm kiếm phòng cần chỉnh sửa
             Phong phong = phongRepo.findBySoPhong(soPhong);
             if (phong == null) {
-                // Nếu không tìm thấy phòng, trả về thông báo lỗi
-                return new APIResponse("Không tìm thấy phòng", false, "");
+                return new ResponseEntity<>("Khoogn tìm thấy phòng", HttpStatus.NOT_FOUND);
             }
-
-            // Cập nhật thông tin của phòng dựa trên DTO
             phong.setTenPhong(dto.getTenPhong());
             phong.setSoTang(dto.getSoTang());
             phong.setSoNha(dto.getSoNha());
             phong.setTrangThai(dto.getTrangThai());
-            // Tiếp tục cập nhật các trường khác nếu cần
-
-            // Lưu các thay đổi vào cơ sở dữ liệu
             phongRepo.save(phong);
-
-            // Trả về thông báo thành công
-            return new APIResponse("Chỉnh sửa phòng thành công", true,phong);
+            APIResponse resposne = new APIResponse("Chỉnh sửa phòng thành công", true, phong);
+            return new ResponseEntity<Object>(resposne, HttpStatus.CREATED);
         }
 
         @Override
         @Transactional
-        public APIResponse delete(Integer soPhong) {
-            // Tìm kiếm phòng cần xóa
+        public ResponseEntity<Object> delete(Integer soPhong) {
             Phong phong = phongRepo.findBySoPhong(soPhong);
             if (phong == null) {
-                // Nếu không tìm thấy phòng, trả về thông báo lỗi
-                return new APIResponse("Không tìm thấy phòng", false, "");
+                return new ResponseEntity<>("Khoogn tìm thấy phòng", HttpStatus.NOT_FOUND);
             }
-
-            // Xóa phòng khỏi cơ sở dữ liệu
             phongRepo.delete(phong);
-
-            // Trả về thông báo thành công
-            return new APIResponse("Xóa phòng thành công", true,"");
+            APIResponse resposne = new APIResponse("Xóa phòng thành công", true, phong);
+            return new ResponseEntity<Object>(resposne, HttpStatus.CREATED);
         }
     }

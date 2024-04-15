@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -22,7 +24,7 @@ public class Hopdong {
     private Integer maHopDong;
 
     @Column(name = "NgayHopDong")
-    private java.sql.Date ngayHopDong;
+    private LocalDateTime ngayHopDong;
 //
 //    @Column(name = "TenNguoiLam")
 //    private String tenNguoiLam;
@@ -34,10 +36,10 @@ public class Hopdong {
     private String trangThai;
 
     @Column(name = "ThoiGianChoThue")
-    private java.sql.Date thoiGianChoThue;
+    private LocalDateTime thoiGianChoThue;
 
     @Column(name = "ThoiGianHetHan")
-    private java.sql.Date thoiGianHetHan;
+    private LocalDateTime thoiGianHetHan;
 
     @Column(name = "TienCoc")
     private Integer tienCoc;

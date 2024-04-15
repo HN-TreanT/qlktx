@@ -34,12 +34,12 @@ public class WebSecurityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws  Exception{
             http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
                     .authorizeHttpRequests(auth ->
-                            auth
-                                    .requestMatchers("/api/v1/nguoidung/**").permitAll()
-                                    .requestMatchers("/api/**").authenticated()
+                            auth.anyRequest().permitAll()
+//                                    .requestMatchers("/api/v1/nguoidung/**").permitAll()
+//                                    .requestMatchers("/api/**").authenticated()
 
                     );
-            http.addFilterBefore(new JwtTokenAuthencationFilter(), BasicAuthenticationFilter.class);
+//            http.addFilterBefore(new JwtTokenAuthencationFilter(), BasicAuthenticationFilter.class);
             return http.build();
     }
 

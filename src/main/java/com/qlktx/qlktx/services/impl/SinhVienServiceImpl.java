@@ -13,15 +13,21 @@ import com.qlktx.qlktx.services.PhongService;
 import com.qlktx.qlktx.services.SinhVienService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SinhVienServiceImpl implements SinhVienService {
     @Autowired
-    private SinhVienRepo SinhVienRepo;
+    private SinhVienRepo sinhVienRepo;
 
     @Autowired
     private PhongRepo PhongRepo;
@@ -30,40 +36,40 @@ public class SinhVienServiceImpl implements SinhVienService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<Sinhvien> list(String hoTenSinhVien, String GioiTinh, String Khoa) {
-        List<Sinhvien> danhsachSVs = SinhVienRepo.findAll();
-        return danhsachSVs;
+    public ResponseEntity<Map<String, Object>> list(int page, int limit , String hoTenSinhVien , String GioiTinh, String Khoa, Integer soPhong) {
+        Pageable pageable = PageRequest.of(page -1 , limit);
+        Map<String, Object> response = new HashMap<>();
+        Page<Sinhvien> list = sinhVienRepo.getSinhVien(hoTenSinhVien, GioiTinh, Khoa, soPhong, pageable);
+        response.put("page", pageable.getPageNumber() + 1);
+        response.put("limit", pageable.getPageSize());
+        response.put("totalElements", list.getTotalElements());
+        response.put("totalPage", list.getTotalPages());
+        response.put("data", list.getContent());
+        return  ResponseEntity.ok(response);
     }
     @Override
     public APIResponse create(SinhVienDTO dto) {
+        System.out.println(dto);
         if (dto.getSoPhong() != null) {
             Phong optionalPhong = PhongRepo.getReferenceById(dto.getSoPhong());
-
             Sinhvien sv = modelMapper.map(dto, Sinhvien.class);
-            // Lưu phòng mới vào cơ sở dữ liệu
-            SinhVienRepo.save(sv);
-
-            // Trả về APIResponse thông báo thành công
-            return new APIResponse("success created", true, sv);
+            sv.setPhong(optionalPhong);
+            sinhVienRepo.save(sv);
+            return new APIResponse("success created", true, null);
         } else {
             Sinhvien sv = modelMapper.map(dto, Sinhvien.class);
-            // Lưu phòng mới vào cơ sở dữ liệu
-            SinhVienRepo.save(sv);
-            return new APIResponse("MaPhong is null", true, sv);
+            sinhVienRepo.save(sv);
+            return new APIResponse("MaPhong is null", true, null);
         }
     }
 
     @Override
     @Transactional
     public APIResponse edit(Integer maSinhVien, SinhVienDTO dto) {
-        // Tìm kiếm phòng cần chỉnh sửa
-        Sinhvien sv = SinhVienRepo.findByMaSinhVien(maSinhVien);
+        Sinhvien sv = sinhVienRepo.findByMaSinhVien(maSinhVien);
         if (sv == null) {
-            // Nếu không tìm thấy phòng, trả về thông báo lỗi
             return new APIResponse("Không tìm thấy sinh viên", false, "");
         }
-
-        // Cập nhật thông tin của phòng dựa trên DTO
         sv.setHoTenSinhVien(dto.getHoTenSinhVien());
         sv.setCccd(dto.getCccd());
         sv.setEmail(dto.getEmail());
@@ -72,12 +78,7 @@ public class SinhVienServiceImpl implements SinhVienService {
         sv.setGioiTinh(dto.getGioiTinh());
         sv.setLop(dto.getLop());
         sv.setSdt(dto.getSdt());
-        // Tiếp tục cập nhật các trường khác nếu cần
-
-        // Lưu các thay đổi vào cơ sở dữ liệu
-        SinhVienRepo.save(sv);
-
-        // Trả về thông báo thành công
+        sinhVienRepo.save(sv);
         return new APIResponse("success", true, sv);
     }
 
@@ -85,14 +86,14 @@ public class SinhVienServiceImpl implements SinhVienService {
     @Transactional
     public APIResponse delete(Integer maSinhVien) {
 
-        Sinhvien sv = SinhVienRepo.findByMaSinhVien(maSinhVien);
+        Sinhvien sv = sinhVienRepo.findByMaSinhVien(maSinhVien);
         if (sv == null) {
             // Nếu không tìm thấy phòng, trả về thông báo lỗi
             return new APIResponse("not found", false, "");
         }
 
         // Xóa phòng khỏi cơ sở dữ liệu
-        SinhVienRepo.delete(sv);
+        sinhVienRepo.delete(sv);
 
         // Trả về thông báo thành công
         return new APIResponse("delete success", true, "");

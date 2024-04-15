@@ -15,7 +15,6 @@ import java.util.List;
 public class DonDangKyController {
     @Autowired
     private DonDangKyService donDangKyService;
-
     @GetMapping("")
     public ResponseEntity<List<Dondangky>> list(
             @RequestParam(name = "page",required = false,defaultValue = "1") int page,

@@ -11,9 +11,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
-import java.sql.Date;
+
 
 @Service
 public class DonDangKyServiceImpl implements DonDangKyService {
@@ -35,7 +38,8 @@ public class DonDangKyServiceImpl implements DonDangKyService {
     public APIResponse create(DonDangKyDTO dto) {
         // Kiểm tra nếu ngayLamDon là null
         if (dto.getNgayLamDon() == null) {
-            dto.setNgayLamDon(Date.valueOf(LocalDate.now()));
+//            dto.setNgayLamDon(Date.va(LocalDate.now()));
+            dto.setNgayLamDon(LocalDateTime.now());
         }
 
         dto.setTrangThai("Chờ duyệt");

@@ -9,11 +9,7 @@
     import java.util.List;
 
     @Repository
-
     public interface DonDangKyRepo extends JpaRepository<Dondangky, Integer> {
         Dondangky findByMaDonDangKy(Integer maDonDangKy);
-        List<Dondangky> findByHoTenSinhVienAndDoiTuongUuTien(String hoTenSinhVien, String doiTuongUuTien);
-
-        public  void deleteByMaDonDangKy(Integer maDonDangKy);
 
     }

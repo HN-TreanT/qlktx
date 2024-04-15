@@ -6,10 +6,14 @@ import com.qlktx.qlktx.entities.Sinhvien;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 
 @Data
@@ -17,28 +21,39 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class SinhVienDTO {
-        private  Integer maSinhVien;
 
+        @NotBlank(message = "Tên sinh viên không đượcn")
         private String hoTenSinhVien;
 
-        private java.sql.Date ngaySinh;
+        @NotNull(message = "Không bỏ trống")
+        private LocalDateTime ngaySinh;
 
+        @NotNull(message = "Giới tính không bỏ trống")
         private String gioiTinh;
 
         private String cccd;
 
+        @NotBlank(message = "Lớp không bỏ trống")
         private String lop;
 
+        @NotBlank(message = "khóa không bỏ trống")
         private String khoa;
 
+        @NotNull(message = "Khóa học không bỏ trống")
         private Integer khoaHoc;
 
         private String sdt;
 
+
+        @NotBlank(message = "Khóa học không bỏ trống")
+        @Email(message = "Đây không phải email")
         private String email;
 
+        @NotNull(message = "Địa chỉ không bỏ trống")
         private String diaChiThuongTru;
 
+
+        @NotNull(message = "Số phòng không bỏ trống")
         private Integer soPhong;
 
     }

@@ -9,6 +9,8 @@ import com.qlktx.qlktx.entities.Sinhvien;
 import com.qlktx.qlktx.entities.Nguoidung;
 import com.qlktx.qlktx.entities.Phong;
 
+import java.time.LocalDateTime;
+
 
 @Data
 @AllArgsConstructor
@@ -20,11 +22,11 @@ public class HopDongDTO {
 
         private String trangThai;
 
-        private java.sql.Date ngayHopDong;
+        private LocalDateTime ngayHopDong;
 
-        private java.sql.Date thoiGianChoThue;
+        private LocalDateTime thoiGianChoThue;
 
-        private java.sql.Date thoiGianHetHan;
+        private LocalDateTime thoiGianHetHan;
 
         private Integer maSinhVien;
 

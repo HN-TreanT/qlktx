@@ -21,10 +21,8 @@ public  class LoaiPhongServiceImpl implements LoaiPhongService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<Loaiphong> list(String tenLoaiPhong, Integer soNguoi) {
-//        List<Loaiphong> loaiphongs = loaiPhongRepo.findByTenLoaiPhongLikeAndSoLuongNguoi(tenLoaiPhong, soNguoi);
+    public List<Loaiphong> list() {
         List<Loaiphong> loaiphongs = loaiPhongRepo.findAll();
-
         return  loaiphongs;
     }
 
@@ -40,12 +38,11 @@ public  class LoaiPhongServiceImpl implements LoaiPhongService {
     public APIResponse edit(Integer maLoaiPhong, LoaiPhongDTO dto) {
         Loaiphong loaiphong = loaiPhongRepo.findByMaLoaiPhong(maLoaiPhong);
         if(loaiphong == null) return new APIResponse("not found", false, "");
-//        Loaiphong maploaiphong  = modelMapper.map(dto, loaiphong.getClass());
         loaiphong.setTenLoaiPhong(dto.getTenLoaiPhong());
         loaiphong.setGhiChu(dto.getGhichu());
         loaiphong.setSoLuongNguoi(dto.getSoLuongNguoi());
         loaiPhongRepo.save(loaiphong);
-        return null;
+        return new APIResponse("delete success", true, "");
     }
 
     @Override
