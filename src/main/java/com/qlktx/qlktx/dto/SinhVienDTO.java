@@ -53,7 +53,6 @@ public class SinhVienDTO {
         private String diaChiThuongTru;
 
 
-        @NotNull(message = "Số phòng không bỏ trống")
         private Integer soPhong;
 
     }

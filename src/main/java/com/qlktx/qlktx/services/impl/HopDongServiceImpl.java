@@ -59,15 +59,17 @@ public  class HopDongServiceImpl implements HopDongService {
 
     @Override
     public APIResponse create(HopDongDTO dto) {
+        System.out.println(dto);
+        System.out.println("check");
         if (dto.getMaSinhVien() == null ) {
-            return new APIResponse("MaSinhVien is null", false, "");
-        }
-        else if (dto.getSoPhong() == null ) {
-            return new APIResponse("soPhong is null", false, "");
-        }
-        else {
-            Sinhvien optionalSV = sinhVienRepo.getReferenceById(dto.getMaSinhVien());
-            Phong optionalPhong = phongRepo.getReferenceById(dto.getSoPhong());
+                return new APIResponse("MaSinhVien is null", false, "");
+            }
+            else if (dto.getSoPhong() == null ) {
+                return new APIResponse("soPhong is null", false, "");
+            }
+            else {
+                Sinhvien optionalSV = sinhVienRepo.getReferenceById(dto.getMaSinhVien());
+                Phong optionalPhong = phongRepo.getReferenceById(dto.getSoPhong());
 
             Hopdong hopDong = modelMapper.map(dto, Hopdong.class);
             // Lưu phòng mới vào cơ sở dữ liệu
@@ -86,7 +88,7 @@ public  class HopDongServiceImpl implements HopDongService {
         if(hopdong == null) return new APIResponse("not found", false, "");
 
         if(dto.getNgayHopDong() != null) {
-            hopdong.setNgayHopDong(dto.getNgayHopDong());
+                hopdong.setNgayHopDong(dto.getNgayHopDong());
         }
         if(dto.getThoiGianChoThue() != null) {
             hopdong.setThoiGianChoThue(dto.getThoiGianChoThue());
@@ -106,7 +108,6 @@ public  class HopDongServiceImpl implements HopDongService {
                 hopdong.setPhong(ph);
             }
         }
-
         hopDongRepo.save(hopdong);
         return new APIResponse("success edit", true, hopdong);
     }

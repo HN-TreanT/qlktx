@@ -14,30 +14,30 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Dondangky {
     @Id
-    @Column(name = "MaDonDangKy")
+    @Column(name = "ma_don_dang_ky")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maDonDangKy;
 
-    @Column(name = "NgayLamDon")
+    @Column(name = "ngay_lam_don")
     private LocalDateTime ngayLamDon;
 
-    @Column(name = "DoiTuongUuTien")
+    @Column(name = "doi_tuong_uu_tien")
     private String doiTuongUuTien;
 
-    @Column(name = "HoTenSinhVien")
+    @Column(name = "ho_ten_sinh_vien")
     private String hoTenSinhVien;
 
-    @Column(name = "TrangThai")
+    @Column(name = "trang_thai")
     private String trangThai;
 
-    @Column(name = "LoaiPhong")
+    @Column(name = "loai_phong")
     private String loaiPhong;
 
-    @Column(name = "SoThang")
+    @Column(name = "so_thang")
     private Integer soThang;
 
     @ManyToOne
-    @JoinColumn(name = "MaSinhVien")
+    @JoinColumn(name = "ma_sinh_vien")
     private Sinhvien sinhvien;
 
 }

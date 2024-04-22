@@ -55,11 +55,11 @@ public class SinhVienServiceImpl implements SinhVienService {
             Sinhvien sv = modelMapper.map(dto, Sinhvien.class);
             sv.setPhong(optionalPhong);
             sinhVienRepo.save(sv);
-            return new APIResponse("success created", true, null);
+            return new APIResponse("success created", true, sv);
         } else {
             Sinhvien sv = modelMapper.map(dto, Sinhvien.class);
             sinhVienRepo.save(sv);
-            return new APIResponse("MaPhong is null", true, null);
+            return new APIResponse("MaPhong is null", true, sv);
         }
     }
 
