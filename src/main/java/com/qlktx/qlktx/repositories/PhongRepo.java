@@ -18,10 +18,13 @@
                 "(:soTang is null  or p.soTang = :soTang) and " +
                 "(:soNha is null  or p.soNha = :soNha)  and " +
                 "(:trangThai is null  or p.trangThai = :trangThai) and " +
-                "(:tenPhong is null  or p.tenPhong = :tenPhong) ")
+                "(:tenPhong is null  or p.tenPhong = :tenPhong) and " +
+                "(:maLoaiPhong is null or p.loaiphong.maLoaiPhong = :maLoaiPhong )")
         Page<Phong> getListPhong(@Param("soTang") Integer soTang,
                                  @Param("soNha") String soNha,
                                  @Param("tenPhong") String tenPhong,
-                                 @Param("trangThai") Integer trangThai, Pageable pageable);
+                                 @Param("trangThai") Integer trangThai,
+                                 @Param("maLoaiPhong") Integer maLoaiPhong,
+                                 Pageable pageable);
 
     }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface PhongService {
-    ResponseEntity<Map<String, Object>> list(Integer soTang, String soNha, String tenPhong, Integer trangThai, int page, int limit);
+    ResponseEntity<Map<String, Object>> list(Integer soTang, String soNha, String tenPhong, Integer trangThai, int page, int limit, Integer maLoaiPhong);
     ResponseEntity<Object> create(PhongDTO dto);
     ResponseEntity<Object> edit(Integer maPhong, PhongDTO dto);
     ResponseEntity<Object> delete(Integer maPhong);

@@ -41,9 +41,9 @@ import java.util.Optional;
         private ModelMapper modelMapper;
 
         @Override
-        public ResponseEntity<Map<String, Object>> list(Integer soTang, String soNha, String tenPhong, Integer trangThai, int page, int limit) {
+        public ResponseEntity<Map<String, Object>> list(Integer soTang, String soNha, String tenPhong, Integer trangThai, int page, int limit, Integer maLoaiPhong) {
             Pageable pageable = PageRequest.of(page -1 , limit, Sort.by("tenPhong"));
-            Page<Phong> danhSachPhongs = phongRepo.getListPhong(soTang, soNha, tenPhong, trangThai, pageable);
+            Page<Phong> danhSachPhongs = phongRepo.getListPhong(soTang, soNha, tenPhong, trangThai,maLoaiPhong, pageable);
             Map<String, Object> response = new HashMap<>();
             response.put("page", pageable.getPageNumber() + 1);
             response.put("limit", pageable.getPageSize());

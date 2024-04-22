@@ -24,9 +24,10 @@ public class PhongController {
             @RequestParam(name = "soTang",required = false) Integer soTang,
             @RequestParam(name = "tenPhong",required = false) String tenPhong,
             @RequestParam(name = "soNha",required = false) String soNha,
-            @RequestParam(name = "trangThai",required = false) Integer trangThai
+            @RequestParam(name = "trangThai",required = false) Integer trangThai,
+            @RequestParam(name = "maLoaiPhong", required = false) Integer maLoaiPhong
     ) {
-        return  PhongService.list(soTang, soNha, tenPhong, trangThai, page, limit);
+        return  PhongService.list(soTang, soNha, tenPhong, trangThai, page, limit, maLoaiPhong);
     }
 
     @PostMapping("/add")
