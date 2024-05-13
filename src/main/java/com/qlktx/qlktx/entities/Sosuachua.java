@@ -36,6 +36,12 @@ public class Sosuachua {
     @Column(name = "PhiSuaChua")
     private Float phiSuaChua;
 
+    @Column(name = "tong_tine")
+    private Float tongTien;
+
+    @Column(name = "trang_thai")
+    private Float trangThai;
+
     @ManyToOne
     @JoinColumn(name = "SoPhong")
     private Phong phong;

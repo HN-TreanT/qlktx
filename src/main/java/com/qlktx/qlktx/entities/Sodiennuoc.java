@@ -34,6 +34,12 @@ public class Sodiennuoc {
     @Column(name = "Thang")
     private LocalDateTime thang;
 
+    @Column(name = "tong_tien")
+    private Float tongTien;
+
+    @Column(name = "trang_thai")
+    private Float trangThai;
+
 //    @Column(name = "SoPhong")
 //    private Integer soPhong;
 
