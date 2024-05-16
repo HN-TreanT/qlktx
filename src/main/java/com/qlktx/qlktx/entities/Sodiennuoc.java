@@ -40,9 +40,6 @@ public class Sodiennuoc {
     @Column(name = "trang_thai")
     private Float trangThai;
 
-//    @Column(name = "SoPhong")
-//    private Integer soPhong;
-
     @ManyToOne
     @JoinColumn(name = "SoPhong")
     private Phong phong;
