@@ -57,7 +57,7 @@ public class Hopdong {
     @JoinColumn(name = "SoPhong")
     private Phong phong;
 
-    @OneToMany(mappedBy = "hopdong", cascade = {CascadeType.ALL})
-    private  List<Phieuthanhtoan> phieuthanhtoans = new ArrayList<>();
+//    @OneToMany(mappedBy = "hopdong", cascade = {CascadeType.ALL})
+//    private  List<Phieuthanhtoan> phieuthanhtoans = new ArrayList<>();
 
 }

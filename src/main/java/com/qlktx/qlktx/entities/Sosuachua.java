@@ -40,5 +40,8 @@ public class Sosuachua {
     @JoinColumn(name = "SoPhong")
     private Phong phong;
 
+    @ManyToOne
+    @JoinColumn(name = "ma_thiet_bi")
+    private Thietbi thietbi;
 
 }

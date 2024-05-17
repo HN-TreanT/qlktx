@@ -8,6 +8,7 @@ import com.qlktx.qlktx.mapper.SoSuaChuaMapper;
 import com.qlktx.qlktx.payloads.APIResponse;
 import com.qlktx.qlktx.repositories.PhongRepo;
 import com.qlktx.qlktx.repositories.SoSuaChuaRepo;
+import com.qlktx.qlktx.repositories.ThietBiRepo;
 import com.qlktx.qlktx.services.SoSuaChuaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,8 @@ public class SoSuaChuaServiceImpl implements SoSuaChuaService {
     private PhongRepo phongRepo;
     @Autowired
     private SoSuaChuaMapper soSuaChuaMapper;
+    @Autowired
+    private ThietBiRepo thietBiRepo;
     @Override
     public ResponseEntity<Object> list(Pageable pageable, Integer soPhong) {
         Page<Sosuachua> list = soSuaChuaRepo.getListSoSuaChua(soPhong, pageable);
@@ -50,6 +53,10 @@ public class SoSuaChuaServiceImpl implements SoSuaChuaService {
         if ( phong.isPresent()) {
             sosuachuaupdate.setPhong(phong.get());
         }
+        Optional<Thietbi> thietbi = thietBiRepo.findById(dto.getMaThietBi());
+        if ( phong.isPresent()) {
+            sosuachuaupdate.setThietbi(thietbi.get());
+        }
         soSuaChuaRepo.save(sosuachuaupdate);
         return ResponseEntity.ok(new APIResponse("success", true, sosuachua));
     }
@@ -57,9 +64,12 @@ public class SoSuaChuaServiceImpl implements SoSuaChuaService {
     @Override
     public ResponseEntity<Object> create(SoSuaChuaDTO dto) {
         Optional<Phong> phong = phongRepo.findById(dto.getSoPhong());
-        if ( !phong.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy đơn đổi phòng", true, null), HttpStatus.NOT_FOUND);
+        if ( !phong.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy đơn đổi phòng", false, null), HttpStatus.NOT_FOUND);
+        Optional<Thietbi> thietbi = thietBiRepo.findById(dto.getMaThietBi());
+        if ( !phong.isPresent())  return  new ResponseEntity<>(new APIResponse("Không tìm thấy thiết bị", false, null), HttpStatus.NOT_FOUND);
         Sosuachua sosuachua = soSuaChuaMapper.toEnity(dto);
         sosuachua.setPhong(phong.get());
+        sosuachua.setThietbi(thietbi.get());
         soSuaChuaRepo.save(sosuachua);
         return ResponseEntity.ok(new APIResponse("success", true, sosuachua));
     }

@@ -31,5 +31,8 @@ public class SoSuaChuaDTO {
     @NotNull(message = "Số phòng không được bỏ trống")
     private Integer soPhong;
 
+    @NotNull(message = "Mã thiết bị khoogn được bỏ trống")
+    private Integer maThietBi;
+
 
 }

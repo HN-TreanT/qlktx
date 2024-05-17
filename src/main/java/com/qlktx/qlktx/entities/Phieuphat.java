@@ -46,7 +46,7 @@ public class Phieuphat {
 
     //    @OneToMany(mappedBy = "loaiphong", cascade = {CascadeType.ALL})
 //    private List<Phong> phongs  = new ArrayList<>();
-    @OneToMany(mappedBy = "phieuphat", cascade = {CascadeType.ALL})
-    private List<Phieuthanhtoan> phieuthanhtoans = new ArrayList<>();
+//    @OneToMany(mappedBy = "phieuphat", cascade = {CascadeType.ALL})
+//    private List<Phieuthanhtoan> phieuthanhtoans = new ArrayList<>();
 
 }
