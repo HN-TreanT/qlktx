@@ -61,4 +61,9 @@ public class PhieuThanhToanController {
     public ResponseEntity<Object> detail(@PathVariable Integer id) {
         return phieuThanhToanService.detail(id);
     }
+
+    @GetMapping("/phieuthanhtoanthangnay")
+    public ResponseEntity<Object> getPhieuThanhToanThangNay(@RequestParam("maPhong") Integer maPhong){
+        return phieuThanhToanService.getPhieuThanhToanCuaThanhNayTheoPhong(maPhong);
+    }
 }

@@ -28,6 +28,9 @@ public class Phieuthanhtoan {
     @Column(name = "so_tien")
     private Float soTien;
 
+    @Column(name = "trang_thai")
+    private Integer trangThai;
+
     @ManyToOne
     @JoinColumn(name = "ma_hop_dong")
     private Hopdong hopdong;
@@ -40,17 +43,17 @@ public class Phieuthanhtoan {
     @JoinColumn(name = "ma_sinh_vien")
     private Sinhvien sinhvien;
 
-    @ManyToOne
-    @JoinColumn(name = "ma_phieu_phat")
-    private Phieuphat phieuphat;
-
-    @ManyToOne
-    @JoinColumn(name = "ma_so_sua_chua")
-    private Sosuachua sosuachua;
-
-    @ManyToOne
-    @JoinColumn(name = "ma_so_dien_nuoc")
-    private Sodiennuoc sodiennuoc;
+//    @ManyToOne
+//    @JoinColumn(name = "ma_phieu_phat")
+//    private Phieuphat phieuphat;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "ma_so_sua_chua")
+//    private Sosuachua sosuachua;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "ma_so_dien_nuoc")
+//    private Sodiennuoc sodiennuoc;
 
 
 }

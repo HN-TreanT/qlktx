@@ -64,11 +64,13 @@ public class PhieuPhatServiceImpl implements PhieuPhatService {
 
     @Override
     public ResponseEntity<Object> create(PhieuPhatDTO dto) {
+        System.out.println(dto);
         Optional<Nguoidung> record = nguoiDungRepo.findById(dto.getIdNV());
         if ( !record.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy nhân viên", false, null), HttpStatus.NOT_FOUND);
         Optional<Phong> phong = phongRepo.findById(dto.getMaPhong());
         if ( !phong.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy phopngf", false, null), HttpStatus.NOT_FOUND);
         Phieuphat phieuphat = phieuPhatMapper.toEntity(dto);
+        phieuphat.setMaPhieuThanhToan(dto.getMaPhieuThanhToan());
         phieuphat.setPhong(phong.get());
         phieuphat.setNguoidung(record.get());
 

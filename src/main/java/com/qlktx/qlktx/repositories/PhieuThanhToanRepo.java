@@ -50,4 +50,7 @@ public interface PhieuThanhToanRepo extends JpaRepository<Phieuthanhtoan, Intege
                               @Param("maSoSuaChua") Integer maSoSuaChua,
                               @Param("maSoDienNuoc") Integer maSoDienNuoc);
 
+    @Query("select ppt from Phieuthanhtoan ppt  where  ppt.phong.soPhong = :maPhong order by ppt.ngayThu desc limit 1")
+    Phieuthanhtoan getPhieuthanhtoanByPhong(@Param("maPhong") Integer maPhong);
+
 }

@@ -34,5 +34,8 @@ public class SoSuaChuaDTO {
     @NotNull(message = "Mã thiết bị khoogn được bỏ trống")
     private Integer maThietBi;
 
+    @NotNull(message = "Mã phiếu thanh toán không được bỏ trống")
+    private Integer maPhieuThanhToan;
+
 
 }

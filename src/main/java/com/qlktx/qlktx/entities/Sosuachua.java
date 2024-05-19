@@ -44,4 +44,8 @@ public class Sosuachua {
     @JoinColumn(name = "ma_thiet_bi")
     private Thietbi thietbi;
 
+    //FK
+    @Column(name = "ma_phieu_thanh_toan")
+    private Integer maPhieuThanhToan;
+
 }

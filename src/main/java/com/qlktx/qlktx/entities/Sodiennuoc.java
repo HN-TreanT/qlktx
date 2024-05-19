@@ -44,4 +44,8 @@ public class Sodiennuoc {
     @JoinColumn(name = "SoPhong")
     private Phong phong;
 
+    //FK
+    @Column(name = "ma_phieu_thanh_toan")
+    private Integer maPhieuThanhToan;
+
 }

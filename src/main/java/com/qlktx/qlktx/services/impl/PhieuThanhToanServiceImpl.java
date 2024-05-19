@@ -1,10 +1,13 @@
 package com.qlktx.qlktx.services.impl;
 
 import com.qlktx.qlktx.dto.PhieuThanhToanDTO;
+import com.qlktx.qlktx.entities.Hopdong;
 import com.qlktx.qlktx.entities.Phieuthanhtoan;
+import com.qlktx.qlktx.entities.Phong;
 import com.qlktx.qlktx.entities.Sodiennuoc;
 import com.qlktx.qlktx.mapper.PhieuThanhToanMapper;
 import com.qlktx.qlktx.payloads.APIResponse;
+import com.qlktx.qlktx.repositories.HopDongRepo;
 import com.qlktx.qlktx.repositories.PhieuThanhToanRepo;
 import com.qlktx.qlktx.repositories.PhongRepo;
 import com.qlktx.qlktx.services.PhieuThanhToanService;
@@ -28,6 +31,8 @@ public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
     @Autowired
     private PhongRepo phongRepo;
     @Autowired
+    private HopDongRepo hopDongRepo;
+    @Autowired
     private PhieuThanhToanMapper phieuThanhToanMapper;
     @Override
     public ResponseEntity<Object> list(Pageable pageable, Integer soPhong, LocalDateTime timeStart, LocalDateTime timeEnd) {
@@ -48,17 +53,36 @@ public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
         if (!record.isPresent()) {
             return  new ResponseEntity<>(new APIResponse("Không tìm thấy phiếu thanh toán", false, null), HttpStatus.NOT_FOUND);
         }
-        phieuThanhToanRepo.updatePhieuThanhToan(id, dto.getNoiDungThu(),dto.getNgayThu(), dto.getSoTien(), dto.getMaHopDong(), dto.getMaPhong(),
-                dto.getMaSinhVien(),dto.getMaPhieuPhat(), dto.getMaSoSuaChua(), dto.getMaSoDienNuoc());
+        Optional<Phong> phong = phongRepo.findById(dto.getMaPhong());
+        if (!phong.isPresent())  return  new ResponseEntity<>(new APIResponse("Không tìm thấy phòng", false, null), HttpStatus.NOT_FOUND);
+        Phieuthanhtoan phieuthanhtoan = phieuThanhToanMapper.toEntity(dto);
+        phieuthanhtoan.setPhong(phong.get());
+        if(dto.getMaHopDong() != null) {
+            Optional<Hopdong> hopdong = hopDongRepo.findById(dto.getMaHopDong());
+            if (hopdong.isPresent()) phieuthanhtoan.setHopdong(hopdong.get());
+        }
+        phieuthanhtoan.setMaPhieuThanhToan(record.get().getMaPhieuThanhToan());
+        phieuThanhToanRepo.save(phieuthanhtoan);
+//        phieuThanhToanRepo.updatePhieuThanhToan(id, dto.getNoiDungThu(),dto.getNgayThu(), dto.getSoTien(), dto.getMaHopDong(), dto.getMaPhong(),
+//                dto.getMaSinhVien(),dto.getMaPhieuPhat(), dto.getMaSoSuaChua(), dto.getMaSoDienNuoc());
         return ResponseEntity.ok(new APIResponse("success", true, null));
     }
 
     @Override
     @Transactional
     public ResponseEntity<Object> create(PhieuThanhToanDTO dto) {
-        phieuThanhToanRepo.insertPhieuThanhToan(dto.getNoiDungThu(),dto.getNgayThu(), dto.getSoTien(), dto.getMaHopDong(), dto.getMaPhong(),
-                dto.getMaSinhVien(),dto.getMaPhieuPhat(), dto.getMaSoSuaChua(), dto.getMaSoDienNuoc());
-        return ResponseEntity.ok(new APIResponse("success", true, null));
+//        phieuThanhToanRepo.insertPhieuThanhToan(dto.getNoiDungThu(),dto.getNgayThu(), dto.getSoTien(), dto.getMaHopDong(), dto.getMaPhong(),
+//                dto.getMaSinhVien(),dto.getMaPhieuPhat(), dto.getMaSoSuaChua(), dto.getMaSoDienNuoc());
+        Optional<Phong> phong = phongRepo.findById(dto.getMaPhong());
+        if (!phong.isPresent())  return  new ResponseEntity<>(new APIResponse("Không tìm thấy phòng", false, null), HttpStatus.NOT_FOUND);
+        Phieuthanhtoan phieuthanhtoan = phieuThanhToanMapper.toEntity(dto);
+        phieuthanhtoan.setPhong(phong.get());
+        if(dto.getMaHopDong() != null) {
+            Optional<Hopdong> hopdong = hopDongRepo.findById(dto.getMaHopDong());
+            if (hopdong.isPresent()) phieuthanhtoan.setHopdong(hopdong.get());
+        }
+        phieuThanhToanRepo.save(phieuthanhtoan);
+        return ResponseEntity.ok(new APIResponse("success", true, phieuthanhtoan));
     }
 
     @Override
@@ -79,5 +103,11 @@ public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
     @Override
     public ResponseEntity<Object> thanhtoan(Integer id) {
         return null;
+    }
+
+    @Override
+    public ResponseEntity<Object> getPhieuThanhToanCuaThanhNayTheoPhong(Integer soPhong) {
+        Phieuthanhtoan phieuthanhtoan = phieuThanhToanRepo.getPhieuthanhtoanByPhong(soPhong);
+        return ResponseEntity.ok(new APIResponse("success", true, phieuthanhtoan));
     }
 }

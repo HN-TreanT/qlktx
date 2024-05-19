@@ -29,10 +29,14 @@ public class PhieuThanhToanDTO {
 
     private Integer maSinhVien;
 
-    private Integer maPhieuPhat;
+    private Integer trangThai;
 
-    private Integer maSoSuaChua;
+//    private Integer maPhieuPhat;
+//
+//    private Integer maSoSuaChua;
+//
+//    private Integer maSoDienNuoc;
+//
 
-    private Integer maSoDienNuoc;
 
 }

@@ -25,6 +25,9 @@ public class PhieuPhatDTO {
     @NotBlank(message = "Lý do không được bỏ trống")
     private String lyDo;
 
+    @NotNull(message = "Mã phiếu thanh toán không được bỏ trống")
+    private Integer maPhieuThanhToan;
+
     @NotNull(message = "phí phạt không được bỏ trống")
     private Float phiPhat;
 

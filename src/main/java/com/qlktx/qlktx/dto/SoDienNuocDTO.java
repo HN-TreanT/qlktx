@@ -29,6 +29,9 @@ public class SoDienNuocDTO {
     @NotNull(message = "tháng không bỏ trống")
     private LocalDateTime thang;
 
+    @NotNull(message = "Mã phiếu thanh toán không được bỏ trống")
+    private Integer maPhieuThanhToan;
+
     private Float tongTien;
 
     private Float trangThai;

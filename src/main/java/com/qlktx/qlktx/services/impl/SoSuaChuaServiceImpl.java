@@ -50,11 +50,12 @@ public class SoSuaChuaServiceImpl implements SoSuaChuaService {
         Optional<Phong> phong = phongRepo.findById(dto.getSoPhong());
         Sosuachua sosuachuaupdate = soSuaChuaMapper.toEnity(dto);
         sosuachuaupdate.setMaSoSuaChua(sosuachua.get().getMaSoSuaChua());
+        sosuachuaupdate.setMaPhieuThanhToan(dto.getMaPhieuThanhToan());
         if ( phong.isPresent()) {
             sosuachuaupdate.setPhong(phong.get());
         }
         Optional<Thietbi> thietbi = thietBiRepo.findById(dto.getMaThietBi());
-        if ( phong.isPresent()) {
+        if ( thietbi.isPresent()) {
             sosuachuaupdate.setThietbi(thietbi.get());
         }
         soSuaChuaRepo.save(sosuachuaupdate);
@@ -68,6 +69,7 @@ public class SoSuaChuaServiceImpl implements SoSuaChuaService {
         Optional<Thietbi> thietbi = thietBiRepo.findById(dto.getMaThietBi());
         if ( !phong.isPresent())  return  new ResponseEntity<>(new APIResponse("Không tìm thấy thiết bị", false, null), HttpStatus.NOT_FOUND);
         Sosuachua sosuachua = soSuaChuaMapper.toEnity(dto);
+        sosuachua.setMaPhieuThanhToan(dto.getMaPhieuThanhToan());
         sosuachua.setPhong(phong.get());
         sosuachua.setThietbi(thietbi.get());
         soSuaChuaRepo.save(sosuachua);

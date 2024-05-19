@@ -47,6 +47,7 @@ public class SoDienNuocSerivceImpl  implements SoDienNuocSerivce {
         Optional<Phong> phong = phongRepo.findById(dto.getSoPhong());
         Sodiennuoc sodiennuocupdate = soDienNuocMapper.toEntity(dto);
         sodiennuocupdate.setMaSoDienNuoc(sodiennuoc.get().getMaSoDienNuoc());
+        sodiennuocupdate.setMaPhieuThanhToan(dto.getMaPhieuThanhToan());
         if ( phong.isPresent()) {
             sodiennuocupdate.setPhong(phong.get());
         }
