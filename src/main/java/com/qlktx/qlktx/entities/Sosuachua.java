@@ -18,12 +18,6 @@ public class Sosuachua {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maSoSuaChua;
 
-//    @Column(name = "SoPhong")
-//    private Integer soPhong;
-//
-//    @Column(name = "MaThietBi")
-//    private Integer maThietBi;
-
     @Column(name = "TinhTrang")
     private String tinhTrang;
 
@@ -36,13 +30,22 @@ public class Sosuachua {
     @Column(name = "PhiSuaChua")
     private Float phiSuaChua;
 
+    @Column(name = "tong_tien")
+    private Float tongTien;
+
+    @Column(name = "trang_thai")
+    private Float trangThai;
+
     @ManyToOne
     @JoinColumn(name = "SoPhong")
     private Phong phong;
 
     @ManyToOne
-    @JoinColumn(name = "MaThietBi")
+    @JoinColumn(name = "ma_thiet_bi")
     private Thietbi thietbi;
 
+    //FK
+    @Column(name = "ma_phieu_thanh_toan")
+    private Integer maPhieuThanhToan;
 
 }

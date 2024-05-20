@@ -34,11 +34,18 @@ public class Sodiennuoc {
     @Column(name = "Thang")
     private LocalDateTime thang;
 
-//    @Column(name = "SoPhong")
-//    private Integer soPhong;
+    @Column(name = "tong_tien")
+    private Float tongTien;
+
+    @Column(name = "trang_thai")
+    private Float trangThai;
 
     @ManyToOne
     @JoinColumn(name = "SoPhong")
     private Phong phong;
+
+    //FK
+    @Column(name = "ma_phieu_thanh_toan")
+    private Integer maPhieuThanhToan;
 
 }

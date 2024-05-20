@@ -15,60 +15,45 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Phieuthanhtoan {
     @Id
-    @Column(name = "MaPhieuThanhToa")
+    @Column(name = "ma_phieu_thanh_toan")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer maPhieuThanhToa;
+    private Integer maPhieuThanhToan;
 
-    @Column(name = "NoiDungThu")
+    @Column(name = "noi_dung_thu")
     private String noiDungThu;
 
-    @Column(name = "NgayThu")
+    @Column(name = "ngay_thu")
     private LocalDateTime ngayThu;
 
-    @Column(name = "SoTien")
+    @Column(name = "so_tien")
     private Float soTien;
 
-//    @Column(name = "SoPhong")
-//    private Integer soPhong;
-//
-//    @Column(name = "MaSinhVien")
-//    private Integer maSinhVien;
-//
-//    @Column(name = "MaHopDong")
-//    private Integer maHopDong;
-//
-//    @Column(name = "MaPhieuPhat")
-//    private Integer maPhieuPhat;
-//
-//    @Column(name = "MaSoSuaChua")
-//    private Integer maSoSuaChua;
-//
-//    @Column(name = "MaSoDienNuoc")
-//    private Integer maSoDienNuoc;
+    @Column(name = "trang_thai")
+    private Integer trangThai;
 
     @ManyToOne
-    @JoinColumn(name = "MaHopDong")
+    @JoinColumn(name = "ma_hop_dong")
     private Hopdong hopdong;
 
     @ManyToOne
-    @JoinColumn(name = "SoPhong")
+    @JoinColumn(name = "so_phong")
     private Phong phong;
 
     @ManyToOne
-    @JoinColumn(name = "MaSinhVien")
+    @JoinColumn(name = "ma_sinh_vien")
     private Sinhvien sinhvien;
 
-    @ManyToOne
-    @JoinColumn(name = "MaPhieuPhat")
-    private Phieuphat phieuphat;
-
-    @ManyToOne
-    @JoinColumn(name = "MaSoSuaChua")
-    private Sosuachua sosuachua;
-
-    @ManyToOne
-    @JoinColumn(name = "MaSoDienNuoc")
-    private Sodiennuoc sodiennuoc;
+//    @ManyToOne
+//    @JoinColumn(name = "ma_phieu_phat")
+//    private Phieuphat phieuphat;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "ma_so_sua_chua")
+//    private Sosuachua sosuachua;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "ma_so_dien_nuoc")
+//    private Sodiennuoc sodiennuoc;
 
 
 }

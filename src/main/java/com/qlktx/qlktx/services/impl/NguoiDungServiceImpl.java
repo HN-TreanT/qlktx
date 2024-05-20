@@ -56,7 +56,7 @@ public class NguoiDungServiceImpl implements NguoiDungService {
         }
 
         if (bcypt.matches(taiKhoanDTO.getPassword(), opNguoidung.get().getMatKhau())) {
-            return  new ResponseEntity<>("Login success", HttpStatus.OK);
+            return  new ResponseEntity<>(opNguoidung.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("login fail", HttpStatus.BAD_REQUEST);
         }

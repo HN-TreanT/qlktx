@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 
 public class DonDangKyDTO {
 
-        private  Integer maSinhVien;
+    private  Integer maSinhVien;
 
-        private String doiTuongUuTien;
+    private String doiTuongUuTien;
 
-        private String hoTenSinhVien;
+    private String hoTenSinhVien;
 
     private String trangThai;
 
@@ -25,6 +25,6 @@ public class DonDangKyDTO {
 
     private String loaiPhong;
 
-        private LocalDateTime ngayLamDon;
+     private LocalDateTime ngayLamDon;
 
     }
