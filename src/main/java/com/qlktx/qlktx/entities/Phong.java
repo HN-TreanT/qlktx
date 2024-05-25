@@ -17,23 +17,23 @@ public class Phong {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer soPhong;
 
-    @Column(name = "TenPhong")
+    @Column(name = "TenPhong", nullable = true)
     private String tenPhong;
 
-    @Column(name = "SoTang")
+    @Column(name = "SoTang", nullable = true)
     private Integer soTang;
 
-    @Column(name = "SoNha")
+    @Column(name = "SoNha", nullable = true)
     private String soNha;
 
-    @Column(name = "SoNguoiO")
+    @Column(name = "SoNguoiO", nullable = true)
     private Integer soNguoiO;
 
-    @Column(name = "trang_thai")
+    @Column(name = "trang_thai", nullable = true)
     private Integer trangThai;
 
     @ManyToOne
-    @JoinColumn(name = "MaLoaiPhong")
+    @JoinColumn(name = "MaLoaiPhong", nullable = true)
     private Loaiphong loaiphong;
 
     @ManyToOne

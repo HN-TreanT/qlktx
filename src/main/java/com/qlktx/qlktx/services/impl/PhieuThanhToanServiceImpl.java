@@ -7,6 +7,7 @@ import com.qlktx.qlktx.entities.Phong;
 import com.qlktx.qlktx.entities.Sodiennuoc;
 import com.qlktx.qlktx.mapper.PhieuThanhToanMapper;
 import com.qlktx.qlktx.payloads.APIResponse;
+import com.qlktx.qlktx.payloads.PhieuThanhToanRes;
 import com.qlktx.qlktx.repositories.HopDongRepo;
 import com.qlktx.qlktx.repositories.PhieuThanhToanRepo;
 import com.qlktx.qlktx.repositories.PhongRepo;
@@ -37,6 +38,18 @@ public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
     @Override
     public ResponseEntity<Object> list(Pageable pageable, Integer soPhong, LocalDateTime timeStart, LocalDateTime timeEnd) {
         Page<Phieuthanhtoan> list = phieuThanhToanRepo.getListPhieuThanhToan(soPhong, timeStart, timeEnd, pageable);
+        Map<String, Object> response = new HashMap<>();
+        response.put("page", pageable.getPageNumber() + 1);
+        response.put("limit", pageable.getPageSize());
+        response.put("totalElements", list.getTotalElements());
+        response.put("totalPage", list.getTotalPages());
+        response.put("data", list.getContent());
+        return  ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<Object> getListPhieuThanhToanTungPhong(Pageable pageable, Integer soPhong, LocalDateTime timeStart, LocalDateTime timeEnd){
+        Page<PhieuThanhToanRes> list = phieuThanhToanRepo.getPhieuThanhToanPhong(soPhong, timeStart, timeEnd, pageable);
         Map<String, Object> response = new HashMap<>();
         response.put("page", pageable.getPageNumber() + 1);
         response.put("limit", pageable.getPageSize());
@@ -101,7 +114,10 @@ public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<Object> thanhtoan(Integer id) {
+
+
         return null;
     }
 

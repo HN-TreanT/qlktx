@@ -57,6 +57,9 @@ public class PhieuPhatServiceImpl implements PhieuPhatService {
         if ( phong.isPresent()) phieuphat.setPhong(phong.get());
 //        Thietbi thietbi = thietBiRepo.findById(dto.getMaThietbi()).orElseThrow(null);
 //        phieuphat.setThietbi(thietbi);
+        Optional<Thietbi> thietbi = Optional.ofNullable(dto.getMaThietbi())
+                .flatMap(thietBiRepo::findById);
+        if ( thietbi.isPresent()) phieuphat.setThietbi(thietbi.get());
         phieuphat.setMaPhieuPhat(record.get().getMaPhieuPhat());
         phieuPhatRepo.save(phieuphat);
         return ResponseEntity.ok(new APIResponse("success", true, phieuphat));
@@ -64,17 +67,17 @@ public class PhieuPhatServiceImpl implements PhieuPhatService {
 
     @Override
     public ResponseEntity<Object> create(PhieuPhatDTO dto) {
-        System.out.println(dto);
         Optional<Nguoidung> record = nguoiDungRepo.findById(dto.getIdNV());
         if ( !record.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy nhân viên", false, null), HttpStatus.NOT_FOUND);
         Optional<Phong> phong = phongRepo.findById(dto.getMaPhong());
         if ( !phong.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy phopngf", false, null), HttpStatus.NOT_FOUND);
         Phieuphat phieuphat = phieuPhatMapper.toEntity(dto);
         phieuphat.setMaPhieuThanhToan(dto.getMaPhieuThanhToan());
-        phieuphat.setPhong(phong.get());
+        phieuphat.setPhong(phong.get());;
         phieuphat.setNguoidung(record.get());
-
-        Optional<Thietbi> thietbi = thietBiRepo.findById(dto.getMaThietbi());
+//        Optional<Thietbi> thietbi = thietBiRepo.findById(dto.getMaThietbi()).flatMap(thietBiRepo::findById);
+        Optional<Thietbi> thietbi = Optional.ofNullable(dto.getMaThietbi())
+                .flatMap(thietBiRepo::findById);
         if ( thietbi.isPresent()) phieuphat.setThietbi(thietbi.get());
         phieuPhatRepo.save(phieuphat);
         return ResponseEntity.ok(new APIResponse("success", true, phieuphat));

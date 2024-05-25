@@ -18,18 +18,18 @@ public class Dondoiphong {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maDonDoiPhong;
 
-    @Column(name = "NgayLamDon")
+    @Column(name = "NgayLamDon", nullable = true)
     private LocalDateTime ngayLamDon;
 
-    @Column(name = "LyDo")
+    @Column(name = "LyDo", nullable = true)
     private String lyDo;
 
     @ManyToOne
-    @JoinColumn(name = "MaSinhVien")
+    @JoinColumn(name = "MaSinhVien", nullable = true)
     private Sinhvien sinhvien;
 
     @ManyToOne
-    @JoinColumn(name = "SoPhong")
+    @JoinColumn(name = "SoPhong", nullable = true)
     private Phong phong;
 
 }

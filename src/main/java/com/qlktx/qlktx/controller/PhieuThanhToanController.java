@@ -42,6 +42,28 @@ public class PhieuThanhToanController {
         return phieuThanhToanService.list(pageable, soPhong, timeStart, timeEnd);
     }
 
+    @GetMapping("/list-phieu-thang-toan-phong")
+    public ResponseEntity<Object> listPhieuThanhToanPhong(
+            @RequestParam(name = "page",required = false,defaultValue = "1") Integer page,
+            @RequestParam(name = "limit",required = false,defaultValue = "10") Integer limit,
+            @RequestParam(name = "soPhong", required = false) Integer soPhong,
+            @RequestParam(name = "time_start", required = false) LocalDateTime timeStart,
+            @RequestParam(name = "time_end", required = false) LocalDateTime timeEnd,
+            @RequestParam(name = "order_price", required = false) String order
+
+    ) {
+        Pageable pageable;
+        // Check if order direction is specified
+        if (order != null && order.equals("asc")) {
+            pageable = PageRequest.of(page - 1, limit, Sort.by("soTien").ascending());
+        } else if (order != null && order.equals("desc")) {
+            pageable = PageRequest.of(page - 1, limit, Sort.by("soTien").descending());
+        } else {
+            pageable = PageRequest.of(page - 1, limit);
+        }
+        return phieuThanhToanService.getListPhieuThanhToanTungPhong(pageable, soPhong, timeStart, timeEnd);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Object> create(@RequestBody @Valid PhieuThanhToanDTO dto) {
         return phieuThanhToanService.create(dto);

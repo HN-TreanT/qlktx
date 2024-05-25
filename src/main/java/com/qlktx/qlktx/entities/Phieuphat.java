@@ -20,28 +20,28 @@ public class Phieuphat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maPhieuPhat;
 
-    @Column(name = "NgayLapPhieu")
+    @Column(name = "NgayLapPhieu", nullable = true)
     private LocalDateTime ngayLapPhieu;
 
-    @Column(name = "SoLuong")
+    @Column(name = "SoLuong", nullable = true)
     private Integer soLuong;
 
-    @Column(name = "LyDo")
+    @Column(name = "LyDo", nullable = true)
     private String lyDo;
 
-    @Column(name = "PhiPhat")
+    @Column(name = "PhiPhat", nullable = true)
     private Float phiPhat;
 
     @ManyToOne
-    @JoinColumn(name = "ID_NV")
+    @JoinColumn(name = "ID_NV", nullable = true)
     private Nguoidung nguoidung;
 
     @ManyToOne
-    @JoinColumn(name = "SoPhong")
+    @JoinColumn(name = "SoPhong", nullable = true)
     private Phong phong;
 
     @ManyToOne
-    @JoinColumn(name = "MaThietBi")
+    @JoinColumn(name = "MaThietBi", nullable = true)
     private Thietbi thietbi;
 
     //FK
