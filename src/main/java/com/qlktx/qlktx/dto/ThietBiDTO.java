@@ -21,9 +21,4 @@ public class ThietBiDTO {
 
     private String donViTinh;
 
-    @NotNull(message = "Giá không được bỏ trống")
-    private Float giaSuaChua;
-
-    @NotNull(message = "Số phòng không được bỏ trống")
-    private Integer soPhong;
 }

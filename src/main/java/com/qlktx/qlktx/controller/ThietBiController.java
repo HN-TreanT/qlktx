@@ -24,7 +24,7 @@ public class ThietBiController {
     public ResponseEntity<Object> list(
             @RequestParam(name = "page",required = false,defaultValue = "1") Integer page,
             @RequestParam(name = "limit",required = false,defaultValue = "10") Integer limit,
-            @RequestParam(name = "soPhong", required = false) Integer soPhong,
+//            @RequestParam(name = "soPhong", required = false) Integer soPhong,
             @RequestParam(name = "tenThietBi", required = false) String tenThietBi,
             @RequestParam(name = "order_price", required = false) String order
     ) {
@@ -39,7 +39,7 @@ public class ThietBiController {
             pageable = PageRequest.of(page - 1, limit);
         }
 
-        return thietBiService.list(pageable, soPhong, tenThietBi);
+        return thietBiService.list(pageable, tenThietBi);
     }
 
     @PostMapping("/add")

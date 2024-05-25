@@ -26,14 +26,4 @@ public class Thietbi {
     @Column(name = "DonViTinh")
     private String donViTinh;
 
-    @Column(name = "GiaSuaChua")
-    private Float giaSuaChua;
-
-//    @Column(name = "SoPhong")
-//    private Integer soPhong;
-
-    @ManyToOne
-    @JoinColumn(name = "SoPhong")
-    private Phong phong;
-
 }

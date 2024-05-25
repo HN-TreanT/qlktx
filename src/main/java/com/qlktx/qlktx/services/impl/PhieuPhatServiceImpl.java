@@ -70,6 +70,7 @@ public class PhieuPhatServiceImpl implements PhieuPhatService {
         Optional<Phong> phong = phongRepo.findById(dto.getMaPhong());
         if ( !phong.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy phopngf", false, null), HttpStatus.NOT_FOUND);
         Phieuphat phieuphat = phieuPhatMapper.toEntity(dto);
+        System.out.println(phieuphat);
         phieuphat.setMaPhieuThanhToan(dto.getMaPhieuThanhToan());
         phieuphat.setPhong(phong.get());
         phieuphat.setNguoidung(record.get());
