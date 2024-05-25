@@ -18,30 +18,30 @@ public class Sosuachua {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maSoSuaChua;
 
-    @Column(name = "TinhTrang")
+    @Column(name = "TinhTrang", nullable = true)
     private String tinhTrang;
 
-    @Column(name = "NgayDiSua")
+    @Column(name = "NgayDiSua", nullable = true)
     private LocalDateTime ngayDiSua;
 
-    @Column(name = "NgayNhanVe")
+    @Column(name = "NgayNhanVe", nullable = true)
     private LocalDateTime ngayNhanVe;
 
-    @Column(name = "PhiSuaChua")
+    @Column(name = "PhiSuaChua", nullable = true)
     private Float phiSuaChua;
 
-    @Column(name = "tong_tien")
+    @Column(name = "tong_tien", nullable = true)
     private Float tongTien;
 
-    @Column(name = "trang_thai")
+    @Column(name = "trang_thai", nullable = true)
     private Float trangThai;
 
     @ManyToOne
-    @JoinColumn(name = "SoPhong")
+    @JoinColumn(name = "SoPhong", nullable = true)
     private Phong phong;
 
     @ManyToOne
-    @JoinColumn(name = "ma_thiet_bi")
+    @JoinColumn(name = "ma_thiet_bi", nullable = true)
     private Thietbi thietbi;
 
     //FK

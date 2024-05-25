@@ -23,7 +23,7 @@ public class Hopdong {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maHopDong;
 
-    @Column(name = "NgayHopDong")
+    @Column(name = "NgayHopDong", nullable = true)
     private LocalDateTime ngayHopDong;
 //
 //    @Column(name = "TenNguoiLam")
@@ -32,29 +32,29 @@ public class Hopdong {
 //    @Column(name = "SDTNguoiLam")
 //    private String sdtNguoiLam;
 
-    @Column(name = "TrangThai")
+    @Column(name = "TrangThai", nullable = true)
     private String trangThai;
 
-    @Column(name = "ThoiGianChoThue")
+    @Column(name = "ThoiGianChoThue", nullable = true)
     private LocalDateTime thoiGianChoThue;
 
-    @Column(name = "ThoiGianHetHan")
+    @Column(name = "ThoiGianHetHan", nullable = true)
     private LocalDateTime thoiGianHetHan;
 
-    @Column(name = "TienCoc")
+    @Column(name = "TienCoc", nullable = true)
     private Integer tienCoc;
 
 
     @ManyToOne
-    @JoinColumn(name = "MaSinhVien")
+    @JoinColumn(name = "MaSinhVien", nullable = true)
     private Sinhvien sinhvien;
 
     @OneToOne
-    @JoinColumn(name = "MaNV")
+    @JoinColumn(name = "MaNV", nullable = true)
     private Nguoidung nguoidung;
 
     @ManyToOne
-    @JoinColumn(name = "SoPhong")
+    @JoinColumn(name = "SoPhong", nullable = true)
     private Phong phong;
 
 //    @OneToMany(mappedBy = "hopdong", cascade = {CascadeType.ALL})

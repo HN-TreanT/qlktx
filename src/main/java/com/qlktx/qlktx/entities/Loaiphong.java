@@ -15,17 +15,17 @@ import java.util.List;
 @NoArgsConstructor
 public class Loaiphong {
     @Id
-    @Column(name = "MaLoaiPhong")
+    @Column(name = "MaLoaiPhong", nullable = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maLoaiPhong;
 
-    @Column(name = "TenLoaiPhong")
+    @Column(name = "TenLoaiPhong", nullable = true)
     private String tenLoaiPhong;
 
-    @Column(name = "SoLuongNguoi")
+    @Column(name = "SoLuongNguoi", nullable = true)
     private Integer soLuongNguoi;
 
-    @Column(name = "GhiChu")
+    @Column(name = "GhiChu", nullable = true)
     private String ghiChu;
 
 //    @OneToMany(mappedBy = "loaiphong", cascade = {CascadeType.ALL})

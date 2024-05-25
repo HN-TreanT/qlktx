@@ -17,13 +17,23 @@ public class Thietbi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maThietBi;
 
-    @Column(name = "TenThietBi")
+    @Column(name = "TenThietBi", nullable = true)
     private String tenThietBi;
 
-    @Column(name = "Soluong")
+    @Column(name = "Soluong", nullable = true)
     private Integer soluong;
 
-    @Column(name = "DonViTinh")
+    @Column(name = "DonViTinh", nullable = true)
     private String donViTinh;
+
+    @Column(name = "GiaSuaChua", nullable = true)
+    private Float giaSuaChua;
+
+//    @Column(name = "SoPhong")
+//    private Integer soPhong;
+
+    @ManyToOne
+    @JoinColumn(name = "SoPhong", nullable = true)
+    private Phong phong;
 
 }

@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Nhomnguoidung {
     @Id
-    @Column(name = "ID_Nhom")
+    @Column(name = "ID_Nhom", nullable = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idNhom;
 
-    @Column(name = "TenNhom")
+    @Column(name = "TenNhom", nullable = true)
     private String tenNhom;
 
-    @Column(name = "Quyen")
+    @Column(name = "Quyen", nullable = true)
     private String quyen;
 
 }

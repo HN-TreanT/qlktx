@@ -19,41 +19,41 @@ public class Sinhvien {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maSinhVien;
 
-    @Column(name = "HoTenSinhVien")
+    @Column(name = "HoTenSinhVien", nullable = true)
     private String hoTenSinhVien;
 
-    @Column(name = "NgaySinh")
+    @Column(name = "NgaySinh", nullable = true)
     private LocalDateTime ngaySinh;
 
-    @Column(name = "GioiTinh")
+    @Column(name = "GioiTinh", nullable = true)
     private String gioiTinh;
 
-    @Column(name = "CCCD")
+    @Column(name = "CCCD", nullable = true)
     private String cccd;
 
-    @Column(name = "Lop")
+    @Column(name = "Lop", nullable = true)
     private String lop;
 
-    @Column(name = "Khoa")
+    @Column(name = "Khoa", nullable = true)
     private String khoa;
 
-    @Column(name = "KhoaHoc")
+    @Column(name = "KhoaHoc", nullable = true)
     private Integer khoaHoc;
 
-    @Column(name = "SDT")
+    @Column(name = "SDT", nullable = true)
     private String sdt;
 
-    @Column(name = "Email")
+    @Column(name = "Email", nullable = true)
     private String email;
 
-    @Column(name = "DiaChiThuongTru")
+    @Column(name = "DiaChiThuongTru", nullable = true)
     private String diaChiThuongTru;
 
 //    @Column(name = "SoPhong")
 //    private Integer soPhong;
 
     @ManyToOne
-    @JoinColumn(name = "SoPhong")
+    @JoinColumn(name = "SoPhong", nullable = true)
     private Phong phong;
 
 }

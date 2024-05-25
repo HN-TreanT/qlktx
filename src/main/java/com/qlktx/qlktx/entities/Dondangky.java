@@ -18,26 +18,26 @@ public class Dondangky {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maDonDangKy;
 
-    @Column(name = "ngay_lam_don")
+    @Column(name = "NgayLamDon", nullable = true)
     private LocalDateTime ngayLamDon;
 
-    @Column(name = "doi_tuong_uu_tien")
+    @Column(name = "DoiTuongUuTien", nullable = true)
     private String doiTuongUuTien;
 
-    @Column(name = "ho_ten_sinh_vien")
+    @Column(name = "HoTenSinhVien", nullable = true)
     private String hoTenSinhVien;
 
-    @Column(name = "trang_thai")
+    @Column(name = "TrangThai", nullable = true)
     private String trangThai;
 
-    @Column(name = "loai_phong")
+    @Column(name = "LoaiPhong", nullable = true)
     private String loaiPhong;
 
-    @Column(name = "so_thang")
+    @Column(name = "SoThang", nullable = true)
     private Integer soThang;
 
     @ManyToOne
-    @JoinColumn(name = "ma_sinh_vien")
+    @JoinColumn(name = "MaSinhVien", nullable = true)
     private Sinhvien sinhvien;
 
 }

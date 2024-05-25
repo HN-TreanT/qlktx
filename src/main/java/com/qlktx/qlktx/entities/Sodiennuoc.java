@@ -19,25 +19,25 @@ public class Sodiennuoc {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maSoDienNuoc;
 
-    @Column(name = "DonGiaDien")
+    @Column(name = "DonGiaDien", nullable = true)
     private Float donGiaDien;
 
-    @Column(name = "DonGiaNuoc")
+    @Column(name = "DonGiaNuoc", nullable = true)
     private Float donGiaNuoc;
 
-    @Column(name = "ChiSoDien")
+    @Column(name = "ChiSoDien", nullable = true)
     private Integer chiSoDien;
 
-    @Column(name = "ChiSoNuoc")
+    @Column(name = "ChiSoNuoc", nullable = true)
     private Integer chiSoNuoc;
 
-    @Column(name = "Thang")
+    @Column(name = "Thang", nullable = true)
     private LocalDateTime thang;
 
-    @Column(name = "tong_tien")
+    @Column(name = "tong_tien", nullable = true)
     private Float tongTien;
 
-    @Column(name = "trang_thai")
+    @Column(name = "trang_thai", nullable = true)
     private Float trangThai;
 
     @ManyToOne

@@ -16,21 +16,21 @@ public class CtDiennuoc {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer MaCTDienNuoc;
 
-    @Column(name = "TenTruongPhong")
+    @Column(name = "TenTruongPhong", nullable = true)
     private String tenTruongPhong;
 
-    @Column(name = "ChiSoDien")
+    @Column(name = "ChiSoDien", nullable = true)
     private Integer chiSoDien;
 
-    @Column(name = "ChiSoNuoc")
+    @Column(name = "ChiSoNuoc", nullable = true)
     private Integer chiSoNuoc;
 
     @ManyToOne
-    @JoinColumn(name = "SoPhong")
+    @JoinColumn(name = "SoPhong", nullable = true)
     private Phong phong;
 
     @ManyToOne
-    @JoinColumn(name = "MaSoDienNuoc")
+    @JoinColumn(name = "MaSoDienNuoc", nullable = true)
     private Sodiennuoc sodiennuoc;
 
 }
