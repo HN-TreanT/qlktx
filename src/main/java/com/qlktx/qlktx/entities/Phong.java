@@ -40,5 +40,4 @@ public class Phong {
     @JoinColumn(name = "MaTrgPhong")
     private Sinhvien truongphong;
 
-
 }

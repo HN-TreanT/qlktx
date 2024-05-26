@@ -5,11 +5,16 @@ import com.qlktx.qlktx.dto.NguoiDungDTO;
 import com.qlktx.qlktx.dto.TaiKhoanDTO;
 import com.qlktx.qlktx.entities.Nguoidung;
 import com.qlktx.qlktx.entities.Nhomnguoidung;
+import com.qlktx.qlktx.entities.Phong;
 import com.qlktx.qlktx.repositories.NguoiDungRepo;
 import com.qlktx.qlktx.repositories.NhomNguoiDungRepo;
 import com.qlktx.qlktx.services.NguoiDungService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +22,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -28,7 +35,18 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     @Autowired
     private ModelMapper modelMapper;
 
-
+    @Override
+    public ResponseEntity<Map<String, Object>> list(Integer idNhom, String tenNv, String chucVu, int page, int limit) {
+        Pageable pageable = PageRequest.of(page -1 , limit);
+        Page<Nguoidung> danhSachNguois = nguoiDungRepo.getNguoiDung(idNhom, tenNv, chucVu, pageable);
+        Map<String, Object> response = new HashMap<>();
+        response.put("page", pageable.getPageNumber() + 1);
+        response.put("limit", pageable.getPageSize());
+        response.put("totalElements", danhSachNguois.getTotalElements());
+        response.put("totalPage", danhSachNguois.getTotalPages());
+        response.put("data", danhSachNguois.getContent());
+        return  ResponseEntity.ok(response);
+    }
     @Override
     public ResponseEntity<Object> register(NguoiDungDTO dto) {
         BCryptPasswordEncoder bcypt = new BCryptPasswordEncoder();

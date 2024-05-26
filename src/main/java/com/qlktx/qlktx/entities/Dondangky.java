@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Dondangky {
     @Id
-    @Column(name = "MaDonDangKy")
+    @Column(name = "ma_don_dang_ky")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maDonDangKy;
 
