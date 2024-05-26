@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface ThietBiService {
-    ResponseEntity<Object> list(Pageable pageable, Integer soPhong, String tenThietBi);
+    ResponseEntity<Object> list(Pageable pageable, String tenThietBi);
     ResponseEntity<Object> edit(Integer id, ThietBiDTO dto);
     ResponseEntity<Object> create(ThietBiDTO dto);
     ResponseEntity<Object> delete(Integer id);

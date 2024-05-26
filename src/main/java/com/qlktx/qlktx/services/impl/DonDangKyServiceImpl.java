@@ -38,17 +38,13 @@ public class DonDangKyServiceImpl implements DonDangKyService {
     public APIResponse create(DonDangKyDTO dto) {
         // Kiểm tra nếu ngayLamDon là null
         if (dto.getNgayLamDon() == null) {
-//            dto.setNgayLamDon(Date.va(LocalDate.now()));
             dto.setNgayLamDon(LocalDateTime.now());
         }
-
         dto.setTrangThai("Chờ duyệt");
         // Kiểm tra nếu maSinhVien không phải là null
         if (dto.getMaSinhVien() != null) {
             // Lấy tham chiếu đến Sinhvien từ maSinhVien
             Sinhvien optionalPhong = sinhVienRepo.getReferenceById(dto.getMaSinhVien());
-
-
             Dondangky donDk = modelMapper.map(dto, Dondangky.class);
             donDangKyRepo.save(donDk);
             return new APIResponse("success created", true, donDk);
