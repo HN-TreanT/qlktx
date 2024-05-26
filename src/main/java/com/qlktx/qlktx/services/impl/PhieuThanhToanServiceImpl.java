@@ -8,9 +8,7 @@ import com.qlktx.qlktx.entities.Sodiennuoc;
 import com.qlktx.qlktx.mapper.PhieuThanhToanMapper;
 import com.qlktx.qlktx.payloads.APIResponse;
 import com.qlktx.qlktx.payloads.PhieuThanhToanRes;
-import com.qlktx.qlktx.repositories.HopDongRepo;
-import com.qlktx.qlktx.repositories.PhieuThanhToanRepo;
-import com.qlktx.qlktx.repositories.PhongRepo;
+import com.qlktx.qlktx.repositories.*;
 import com.qlktx.qlktx.services.PhieuThanhToanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -35,6 +34,12 @@ public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
     private HopDongRepo hopDongRepo;
     @Autowired
     private PhieuThanhToanMapper phieuThanhToanMapper;
+    @Autowired
+    private SoSuaChuaRepo soSuaChuaRepo;
+    @Autowired
+    private SoDienNuocRepo soDienNuocRepo;
+    @Autowired
+    private PhieuPhatRepo phieuPhatRepo;
     @Override
     public ResponseEntity<Object> list(Pageable pageable, Integer soPhong, LocalDateTime timeStart, LocalDateTime timeEnd) {
         Page<Phieuthanhtoan> list = phieuThanhToanRepo.getListPhieuThanhToan(soPhong, timeStart, timeEnd, pageable);
@@ -116,9 +121,15 @@ public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
     @Override
     @Transactional
     public ResponseEntity<Object> thanhtoan(Integer id) {
-
-
-        return null;
+        Optional<Phieuthanhtoan> phieuthanhtoan = Optional.ofNullable(id)
+                .flatMap(phieuThanhToanRepo::findById);
+        if (!phieuthanhtoan.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy phiếu thanh toán", false, null), HttpStatus.NOT_FOUND);
+        soDienNuocRepo.updateThanhToan(id);
+        soSuaChuaRepo.updateThanhToan(id);
+        phieuPhatRepo.updateThanhToan(id);
+        phieuthanhtoan.get().setTrangThai(1);
+        phieuThanhToanRepo.save(phieuthanhtoan.get());
+        return new ResponseEntity<>(new APIResponse("Thanh toán thành công", true, null), HttpStatus.OK);
     }
 
     @Override

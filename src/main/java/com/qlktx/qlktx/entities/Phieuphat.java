@@ -48,5 +48,8 @@ public class Phieuphat {
     @Column(name = "ma_phieu_thanh_toan")
     private Integer maPhieuThanhToan;
 
+    @Column(name = "trang_thai")
+    private Integer trangThai;
+
 
 }

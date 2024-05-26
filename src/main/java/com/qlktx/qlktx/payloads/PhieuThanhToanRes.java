@@ -3,6 +3,7 @@ package com.qlktx.qlktx.payloads;
 import java.time.LocalDateTime;
 
 public interface PhieuThanhToanRes {
+     String getTen_phong();
      Integer getMa_phieu_thanh_toan();
      Integer getSo_phong();
      LocalDateTime getNgay_thu();

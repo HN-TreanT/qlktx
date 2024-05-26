@@ -26,7 +26,7 @@ public interface PhieuThanhToanRepo extends JpaRepository<Phieuthanhtoan, Intege
     @Query(value = "WITH TotalDienNuoc AS (SELECT ma_phieu_thanh_toan, SUM(tong_tien) AS tongtienDiennuoc FROM sodiennuoc GROUP BY ma_phieu_thanh_toan),\n" +
             "TotalSuaChua AS (SELECT ma_phieu_thanh_toan, SUM(phi_sua_chua) AS tongtienSuachua FROM sosuachua GROUP BY ma_phieu_thanh_toan),\n" +
             "TotalPhat AS (SELECT ma_phieu_thanh_toan, SUM(phi_phat) AS tongtienPhat FROM phieuphat GROUP BY ma_phieu_thanh_toan)\n" +
-            "SELECT ptt.ma_phieu_thanh_toan, ptt.ma_sinh_vien, ptt.so_phong, ptt.ngay_thu, ptt.noi_dung_thu, ptt.trang_thai, ptt.so_tien, \n" +
+            "SELECT ptt.ma_phieu_thanh_toan, p.ten_phong, ptt.ma_sinh_vien, ptt.so_phong, ptt.ngay_thu, ptt.noi_dung_thu, ptt.trang_thai, ptt.so_tien, \n" +
             "    COALESCE(td.tongtienDiennuoc, 0) AS tongtienDiennuoc, \n" +
             "    COALESCE(tsc.tongtienSuachua, 0) AS tongtienSuachua, \n" +
             "    COALESCE(tp.tongtienPhat, 0) AS tongtienPhat\n" +
@@ -38,7 +38,7 @@ public interface PhieuThanhToanRepo extends JpaRepository<Phieuthanhtoan, Intege
             "LEFT JOIN phong p ON p.so_phong = ptt.so_phong\n" +
             "where ptt.ma_hop_dong is null and (:soPhong is null or ptt.so_phong = :soPhong) and " +
             "(:timeStart is null or :timeEnd is null or (ptt.ngay_thu >= :timeStart and ptt.ngay_thu <= :timeEnd))\n" +
-            "GROUP BY ptt.ma_phieu_thanh_toan, ptt.ma_sinh_vien, ptt.so_phong, ptt.ngay_thu, ptt.noi_dung_thu, ptt.trang_thai, ptt.so_tien, td.tongtienDiennuoc, tsc.tongtienSuachua, tp.tongtienPhat", nativeQuery = true)
+            "GROUP BY ptt.ma_phieu_thanh_toan, ptt.ma_sinh_vien, ptt.so_phong, ptt.ngay_thu, ptt.noi_dung_thu, ptt.trang_thai, ptt.so_tien, td.tongtienDiennuoc, tsc.tongtienSuachua, tp.tongtienPhat, p.ten_phong", nativeQuery = true)
     Page<PhieuThanhToanRes> getPhieuThanhToanPhong(@Param("soPhong") Integer soPhong,
                                                    @Param("timeStart") LocalDateTime timeStart,
                                                    @Param("timeEnd") LocalDateTime timeEnd , Pageable pageable);

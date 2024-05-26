@@ -12,7 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("api/v1/phieuthanhtoan")
@@ -47,8 +50,8 @@ public class PhieuThanhToanController {
             @RequestParam(name = "page",required = false,defaultValue = "1") Integer page,
             @RequestParam(name = "limit",required = false,defaultValue = "10") Integer limit,
             @RequestParam(name = "soPhong", required = false) Integer soPhong,
-            @RequestParam(name = "time_start", required = false) LocalDateTime timeStart,
-            @RequestParam(name = "time_end", required = false) LocalDateTime timeEnd,
+            @RequestParam(name = "time_start", required = false) String timeStart,
+            @RequestParam(name = "time_end", required = false) String timeEnd,
             @RequestParam(name = "order_price", required = false) String order
 
     ) {
@@ -61,7 +64,19 @@ public class PhieuThanhToanController {
         } else {
             pageable = PageRequest.of(page - 1, limit);
         }
-        return phieuThanhToanService.getListPhieuThanhToanTungPhong(pageable, soPhong, timeStart, timeEnd);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate timeStart2 = timeStart != null ? LocalDate.parse(timeStart, formatter) : null;
+        LocalDate timeEnd2 = timeEnd != null ? LocalDate.parse(timeEnd, formatter) : null;
+//        LocalDateTime start = timeStart != null ?  LocalDateTime.parse(timeStart, formatter) : null;
+//        LocalDateTime end = timeEnd != null ? LocalDateTime.parse(timeEnd, formatter) : null;
+        if (timeStart != null && timeEnd != null && timeStart.equals(timeEnd)) {
+            LocalDate time1 = LocalDate.parse(timeStart, formatter);
+            LocalDateTime timeStartConvert = time1.atStartOfDay();
+            LocalDateTime timeEndConvert = time1.atTime(LocalTime.MAX);
+            return phieuThanhToanService.getListPhieuThanhToanTungPhong(pageable, soPhong, timeEndConvert, timeEndConvert);
+        }
+        return phieuThanhToanService.getListPhieuThanhToanTungPhong(pageable, soPhong, timeStart2 != null ? timeStart2.atStartOfDay() : null, timeEnd2 != null ? timeEnd2.atTime(LocalTime.MAX) : null);
     }
 
     @PostMapping("/add")
@@ -87,5 +102,10 @@ public class PhieuThanhToanController {
     @GetMapping("/phieuthanhtoanthangnay")
     public ResponseEntity<Object> getPhieuThanhToanThangNay(@RequestParam("maPhong") Integer maPhong){
         return phieuThanhToanService.getPhieuThanhToanCuaThanhNayTheoPhong(maPhong);
+    }
+
+    @GetMapping("/thanhtoan/{id}")
+    public  ResponseEntity<Object> thanhtoan(@PathVariable Integer id) {
+        return phieuThanhToanService.thanhtoan(id);
     }
 }
