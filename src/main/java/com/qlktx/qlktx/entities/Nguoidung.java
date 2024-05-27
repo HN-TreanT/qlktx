@@ -6,13 +6,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "nguoidung")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Nguoidung {
+public class Nguoidung implements UserDetails {
     @Id
     @Column(name = "ID_NV", nullable = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,4 +45,39 @@ public class Nguoidung {
     @ManyToOne
     @JoinColumn(name = "ID_Nhom", nullable = true)
     private Nhomnguoidung nhomnguoidung;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(nhomnguoidung.getQuyen()));
+    }
+
+    @Override
+    public String getPassword() {
+        return matKhau;
+    }
+
+    @Override
+    public String getUsername() {
+        return tenDangNhap;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

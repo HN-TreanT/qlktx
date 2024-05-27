@@ -14,6 +14,6 @@ public interface PhieuThanhToanService {
     ResponseEntity<Object> create(PhieuThanhToanDTO dto);
     ResponseEntity<Object> delete(Integer id);
     ResponseEntity<Object> detail(Integer id);
-    ResponseEntity<Object> thanhtoan(Integer id);
+    ResponseEntity<Object> thanhtoan(Integer id, Float tongTien);
     ResponseEntity<Object> getPhieuThanhToanCuaThanhNayTheoPhong(Integer soPhong);
 }

@@ -11,6 +11,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.qlktx.qlktx.payloads.APIResponse;
@@ -76,7 +78,9 @@ public class MyGlobalExceptionHandler {
 //     return new ResponseEntity<String>(res, HttpStatus.UNAUTHORIZED);
 //     }
 //
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AuthenticationException.class)
+    @ResponseBody
     public ResponseEntity<String>
     myAuthenticationException(AuthenticationException e) {
 

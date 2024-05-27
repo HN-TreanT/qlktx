@@ -104,8 +104,8 @@ public class PhieuThanhToanController {
         return phieuThanhToanService.getPhieuThanhToanCuaThanhNayTheoPhong(maPhong);
     }
 
-    @GetMapping("/thanhtoan/{id}")
-    public  ResponseEntity<Object> thanhtoan(@PathVariable Integer id) {
-        return phieuThanhToanService.thanhtoan(id);
+    @GetMapping("/thanhtoan")
+    public  ResponseEntity<Object> thanhtoan(@RequestParam("id") Integer id, @RequestParam("tong_tien") Float tongTien) {
+        return phieuThanhToanService.thanhtoan(id, tongTien);
     }
 }

@@ -120,7 +120,7 @@ public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
 
     @Override
     @Transactional
-    public ResponseEntity<Object> thanhtoan(Integer id) {
+    public ResponseEntity<Object> thanhtoan(Integer id, Float tongTien) {
         Optional<Phieuthanhtoan> phieuthanhtoan = Optional.ofNullable(id)
                 .flatMap(phieuThanhToanRepo::findById);
         if (!phieuthanhtoan.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy phiếu thanh toán", false, null), HttpStatus.NOT_FOUND);
@@ -128,6 +128,7 @@ public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
         soSuaChuaRepo.updateThanhToan(id);
         phieuPhatRepo.updateThanhToan(id);
         phieuthanhtoan.get().setTrangThai(1);
+        phieuthanhtoan.get().setSoTien(tongTien);
         phieuThanhToanRepo.save(phieuthanhtoan.get());
         return new ResponseEntity<>(new APIResponse("Thanh toán thành công", true, null), HttpStatus.OK);
     }

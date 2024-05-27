@@ -27,4 +27,6 @@
                                  @Param("maLoaiPhong") Integer maLoaiPhong,
                                  Pageable pageable);
 
+        List<Phong> findAllByTrangThai(Integer trangThai);
+
     }
