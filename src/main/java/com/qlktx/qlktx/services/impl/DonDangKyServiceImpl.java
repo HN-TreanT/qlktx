@@ -11,6 +11,8 @@ import com.qlktx.qlktx.repositories.HopDongRepo;
 import com.qlktx.qlktx.repositories.PhongRepo;
 import com.qlktx.qlktx.repositories.SinhVienRepo;
 import com.qlktx.qlktx.services.DonDangKyService;
+import com.qlktx.qlktx.services.EmailSenderService;
+import com.qlktx.qlktx.services.SendEmailService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,6 +45,9 @@ public class DonDangKyServiceImpl implements DonDangKyService {
 
     @Autowired
     private PhongRepo phongRepo;
+
+    @Autowired
+    private SendEmailService sendEmailService;
 
     @Override
     public ResponseEntity<Object> list(String hoTenSinhVien, String doiTuongUuTien, String trangThai, Pageable pageable) {
@@ -153,6 +158,9 @@ public class DonDangKyServiceImpl implements DonDangKyService {
         phongRepo.save(phong.get());
         hopDongRepo.save(hopdong);
         donDangKyRepo.save(dondangky.get());
+
+        sendEmailService.sendSimpleEmailMessage(dondangky.get().getSinhvien().getEmail(), "[THÔNG BÁO]: Phê duyệt đơn đăng ký của sinh viên " + dondangky.get().getSinhvien().getHoTenSinhVien(),
+                "Chúc mừng bạn đăng ký thành công ký túc xá");
 
 //        hopdong.set
         return  new ResponseEntity<>(new APIResponse("duyệt thanh công", false, ""), HttpStatus.OK);

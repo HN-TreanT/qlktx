@@ -14,4 +14,7 @@ public interface NguoiDungService {
     ResponseEntity<Object> register(NguoiDungDTO dto);
     ResponseEntity<Object> login(TaiKhoanDTO taiKhoanDTO);
     ResponseEntity<Object> refresh(String token);
+    ResponseEntity<Object> delete(Integer id_nv);
+
+    ResponseEntity<Object> phanquyen(Integer idNv, Integer id_nhom);
 }

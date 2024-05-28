@@ -117,4 +117,29 @@ public class NguoiDungServiceImpl implements NguoiDungService {
             return  new ResponseEntity<>("token expired", HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @Override
+    public ResponseEntity<Object> delete(Integer id_nv) {
+        Optional<Nguoidung> nguoidung = nguoiDungRepo.findById(id_nv);
+        if (!nguoidung.isPresent()) return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+        nguoiDungRepo.delete(nguoidung.get());
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Object> phanquyen(Integer idNv, Integer id_nhom) {
+        Optional<Nguoidung> opNguoidung = nguoiDungRepo.findById(idNv);
+        if (!opNguoidung.isPresent()) {
+            return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+        }
+
+        Optional<Nhomnguoidung> nhomnguoidungOut = nhomNguoiDungRepo.findById(id_nhom); // Corrected id_nhom parameter
+        if (!nhomnguoidungOut.isPresent()) {
+            return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+        }
+
+        opNguoidung.get().setNhomnguoidung(nhomnguoidungOut.get());
+        nguoiDungRepo.save(opNguoidung.get());
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
 }

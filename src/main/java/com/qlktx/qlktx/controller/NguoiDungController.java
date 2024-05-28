@@ -17,6 +17,7 @@ import java.util.Map;
 public class NguoiDungController {
     @Autowired
     private NguoiDungService nguoiDungService;
+
     @GetMapping("/list")
     public  ResponseEntity<Map<String, Object>> list(
             @RequestParam(name = "page",required = false,defaultValue = "1") int page,
@@ -41,6 +42,18 @@ public class NguoiDungController {
     public  ResponseEntity<Object> refresh(@RequestBody RefreshTokenDTO refresh_token) {
         return nguoiDungService.refresh(refresh_token.getRefresh_token());
     }
+
+    @DeleteMapping("/delete/{id_nv}")
+    public ResponseEntity<Object> deleteNguoiDung(@PathVariable Integer id_nv) {
+        return nguoiDungService.delete(id_nv);
+    }
+
+    @PutMapping("/editrole")
+    public ResponseEntity<Object> editQuyen(@RequestParam("idNv") Integer idNv, @RequestParam("id_nhom") Integer id_nhom) {
+        System.out.println(idNv);
+        return nguoiDungService.phanquyen(idNv, id_nhom);
+    }
+
 
 
 }
