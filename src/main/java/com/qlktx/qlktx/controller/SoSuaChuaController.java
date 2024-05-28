@@ -61,4 +61,9 @@ public class SoSuaChuaController {
     public ResponseEntity<Object> detail(@PathVariable Integer id) {
         return soSuaChuaService.detail(id);
     }
+
+    @GetMapping("/thongke")
+    public ResponseEntity<Object> thongke() {
+        return soSuaChuaService.thongke();
+    }
 }

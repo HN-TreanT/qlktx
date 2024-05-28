@@ -11,4 +11,5 @@ public interface SoDienNuocSerivce {
     ResponseEntity<Object> create(SoDienNuocDTO dto);
     ResponseEntity<Object> delete(Integer id);
     ResponseEntity<Object> detail(Integer id);
+    ResponseEntity<Object> thongke();
 }

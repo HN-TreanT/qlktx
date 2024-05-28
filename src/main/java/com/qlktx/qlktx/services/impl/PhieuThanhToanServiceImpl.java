@@ -8,6 +8,7 @@ import com.qlktx.qlktx.entities.Sodiennuoc;
 import com.qlktx.qlktx.mapper.PhieuThanhToanMapper;
 import com.qlktx.qlktx.payloads.APIResponse;
 import com.qlktx.qlktx.payloads.PhieuThanhToanRes;
+import com.qlktx.qlktx.payloads.ThongKeDienNuoc;
 import com.qlktx.qlktx.repositories.*;
 import com.qlktx.qlktx.services.PhieuThanhToanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
@@ -137,5 +135,11 @@ public class PhieuThanhToanServiceImpl implements PhieuThanhToanService {
     public ResponseEntity<Object> getPhieuThanhToanCuaThanhNayTheoPhong(Integer soPhong) {
         Phieuthanhtoan phieuthanhtoan = phieuThanhToanRepo.getPhieuthanhtoanByPhong(soPhong);
         return ResponseEntity.ok(new APIResponse("success", true, phieuthanhtoan));
+    }
+
+    @Override
+    public ResponseEntity<Object> thongke() {
+        Collection<ThongKeDienNuoc> thongKeDienNuocs = phieuThanhToanRepo.thongke();
+        return ResponseEntity.ok(thongKeDienNuocs);
     }
 }

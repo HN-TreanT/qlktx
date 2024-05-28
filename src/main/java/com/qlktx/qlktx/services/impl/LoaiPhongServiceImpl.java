@@ -3,13 +3,16 @@ package com.qlktx.qlktx.services.impl;
 import com.qlktx.qlktx.dto.LoaiPhongDTO;
 import com.qlktx.qlktx.entities.Loaiphong;
 import com.qlktx.qlktx.payloads.APIResponse;
+import com.qlktx.qlktx.payloads.ThogKePhong;
 import com.qlktx.qlktx.repositories.LoaiPhongRepo;
 import com.qlktx.qlktx.services.LoaiPhongService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -52,5 +55,11 @@ public  class LoaiPhongServiceImpl implements LoaiPhongService {
         if(loaiphong == null) return new APIResponse("not found", false, "");
         loaiPhongRepo.deleteLoaiphongByMaLoaiPhong(maLoaiPhong);
         return new APIResponse("delete success", true, "");
+    }
+
+    @Override
+    public ResponseEntity<Object> thogke() {
+        Collection<ThogKePhong> thongkes = loaiPhongRepo.thongke();
+        return ResponseEntity.ok(thongkes);
     }
 }

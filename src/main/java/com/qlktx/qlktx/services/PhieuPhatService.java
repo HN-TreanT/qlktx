@@ -13,4 +13,5 @@ public interface PhieuPhatService {
     ResponseEntity<Object> create(PhieuPhatDTO dto);
     ResponseEntity<Object> delete(Integer id);
     ResponseEntity<Object> detail(Integer id);
+    ResponseEntity<Object> thongke();
 }

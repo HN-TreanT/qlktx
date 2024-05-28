@@ -109,4 +109,9 @@ public class PhieuThanhToanController {
     public  ResponseEntity<Object> thanhtoan(@RequestParam("id") Integer id, @RequestParam("tong_tien") Float tongTien) {
         return phieuThanhToanService.thanhtoan(id, tongTien);
     }
+
+    @GetMapping("/thongke")
+    public  ResponseEntity<Object> thongke() {
+        return phieuThanhToanService.thongke();
+    }
 }

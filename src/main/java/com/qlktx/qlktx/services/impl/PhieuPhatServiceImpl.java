@@ -5,6 +5,7 @@ import com.qlktx.qlktx.dto.PhieuThanhToanDTO;
 import com.qlktx.qlktx.entities.*;
 import com.qlktx.qlktx.mapper.PhieuPhatMapper;
 import com.qlktx.qlktx.payloads.APIResponse;
+import com.qlktx.qlktx.payloads.ThongKeDienNuoc;
 import com.qlktx.qlktx.repositories.NguoiDungRepo;
 import com.qlktx.qlktx.repositories.PhieuPhatRepo;
 import com.qlktx.qlktx.repositories.PhongRepo;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -97,5 +99,11 @@ public class PhieuPhatServiceImpl implements PhieuPhatService {
         Optional<Phieuphat> record = phieuPhatRepo.findById(id);
         if ( !record.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy phiếu phạt", false, null), HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(new APIResponse("success", true, record.get()));
+    }
+
+    @Override
+    public ResponseEntity<Object> thongke() {
+        Collection<ThongKeDienNuoc> thongKeDienNuocs = phieuPhatRepo.thongke();
+        return ResponseEntity.ok(thongKeDienNuocs);
     }
 }

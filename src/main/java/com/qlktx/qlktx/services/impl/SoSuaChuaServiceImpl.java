@@ -6,6 +6,7 @@ import com.qlktx.qlktx.entities.Sosuachua;
 import com.qlktx.qlktx.entities.Thietbi;
 import com.qlktx.qlktx.mapper.SoSuaChuaMapper;
 import com.qlktx.qlktx.payloads.APIResponse;
+import com.qlktx.qlktx.payloads.ThongKeDienNuoc;
 import com.qlktx.qlktx.repositories.PhongRepo;
 import com.qlktx.qlktx.repositories.SoSuaChuaRepo;
 import com.qlktx.qlktx.repositories.ThietBiRepo;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -90,5 +92,11 @@ public class SoSuaChuaServiceImpl implements SoSuaChuaService {
         if ( !sosuachua.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy số sửa chữa", false, null), HttpStatus.NOT_FOUND);
         soSuaChuaRepo.delete(sosuachua.get());
         return ResponseEntity.ok(new APIResponse("success", true, sosuachua));
+    }
+
+    @Override
+    public ResponseEntity<Object> thongke() {
+        Collection<ThongKeDienNuoc> thongKeDienNuocs = soSuaChuaRepo.thogke();
+        return ResponseEntity.ok(thongKeDienNuocs);
     }
 }

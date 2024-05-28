@@ -53,4 +53,9 @@ public class PhieuPhatController {
     public ResponseEntity<Object> detail(@PathVariable Integer id) {
         return phieuPhatService.detail(id);
     }
+
+    @GetMapping("/thongke")
+    public  ResponseEntity<Object> thongke() {
+        return phieuPhatService.thongke();
+    }
 }

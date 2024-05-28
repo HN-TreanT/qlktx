@@ -47,4 +47,9 @@ public class SoDienNuocController {
     public ResponseEntity<Object> detail(@PathVariable Integer id) {
         return soDienNuocSerivce.detail(id);
     }
+
+    @GetMapping("/thongke")
+    public ResponseEntity<Object> thongke() {
+        return soDienNuocSerivce.thongke();
+    }
 }

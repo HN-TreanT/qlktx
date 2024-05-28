@@ -6,6 +6,7 @@ import com.qlktx.qlktx.entities.Sodiennuoc;
 import com.qlktx.qlktx.entities.Sosuachua;
 import com.qlktx.qlktx.mapper.SoDienNuocMapper;
 import com.qlktx.qlktx.payloads.APIResponse;
+import com.qlktx.qlktx.payloads.ThongKeDienNuoc;
 import com.qlktx.qlktx.repositories.PhongRepo;
 import com.qlktx.qlktx.repositories.SoDienNuocRepo;
 import com.qlktx.qlktx.services.SoDienNuocSerivce;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -78,5 +80,11 @@ public class SoDienNuocSerivceImpl  implements SoDienNuocSerivce {
         Optional<Sodiennuoc> sodiennuoc = soDienNuocRepo.findById(id);
         if ( !sodiennuoc.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy số điện nước", false, null), HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(new APIResponse("success", true, sodiennuoc));
+    }
+
+    @Override
+    public ResponseEntity<Object> thongke() {
+        Collection<ThongKeDienNuoc> thongke = soDienNuocRepo.thongkediennuoc();
+        return ResponseEntity.ok(thongke);
     }
 }

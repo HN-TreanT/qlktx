@@ -11,4 +11,5 @@ public interface SoSuaChuaService {
     ResponseEntity<Object> create(SoSuaChuaDTO dto);
     ResponseEntity<Object> delete(Integer id);
     ResponseEntity<Object> detail(Integer id);
+    ResponseEntity<Object> thongke();
 }

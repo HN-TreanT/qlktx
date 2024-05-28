@@ -47,4 +47,10 @@ public class LoaiPhongController {
         return ResponseEntity.ok(loaiPhongService.delete(maLoaiPhong));
     }
 
+    @GetMapping("/thongke")
+    public ResponseEntity<Object> thongke(
+    ) {
+        return  loaiPhongService.thogke();
+    }
+
 }

@@ -2,6 +2,7 @@ package com.qlktx.qlktx.repositories;
 
 import com.qlktx.qlktx.entities.Phieuthanhtoan;
 import com.qlktx.qlktx.payloads.PhieuThanhToanRes;
+import com.qlktx.qlktx.payloads.ThongKeDienNuoc;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Repository
 public interface PhieuThanhToanRepo extends JpaRepository<Phieuthanhtoan, Integer> {
@@ -74,5 +76,18 @@ public interface PhieuThanhToanRepo extends JpaRepository<Phieuthanhtoan, Intege
 
     @Query("select ppt from Phieuthanhtoan ppt  where  ppt.phong.soPhong = :maPhong order by ppt.ngayThu desc limit 1")
     Phieuthanhtoan getPhieuthanhtoanByPhong(@Param("maPhong") Integer maPhong);
+
+
+    @Query(value = "SELECT \n" +
+            "    YEAR(ngay_thu) AS nam,\n" +
+            "    MONTH(ngay_thu) AS thang,\n" +
+            "    sum(so_tien) as tong_tien\n" +
+            "FROM \n" +
+            "    phieuthanhtoan\n" +
+            "GROUP BY \n" +
+            "    YEAR(ngay_thu), MONTH(ngay_thu)\n" +
+            "ORDER BY \n" +
+            "    nam, thang;", nativeQuery = true)
+    Collection<ThongKeDienNuoc> thongke();
 
 }
