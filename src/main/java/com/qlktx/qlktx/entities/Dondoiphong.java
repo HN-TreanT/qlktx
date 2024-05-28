@@ -24,6 +24,9 @@ public class Dondoiphong {
     @Column(name = "LyDo", nullable = true)
     private String lyDo;
 
+    @Column(name = "TrangThai", nullable = true)
+    private Integer trangThai;
+
     @ManyToOne
     @JoinColumn(name = "MaSinhVien", nullable = true)
     private Sinhvien sinhvien;
