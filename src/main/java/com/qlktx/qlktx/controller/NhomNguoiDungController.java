@@ -2,6 +2,8 @@ package com.qlktx.qlktx.controller;
 
 import com.qlktx.qlktx.dto.LoaiPhongDTO;
 import com.qlktx.qlktx.entities.Loaiphong;
+import com.qlktx.qlktx.entities.Nhomnguoidung;
+import com.qlktx.qlktx.repositories.NhomNguoiDungRepo;
 import com.qlktx.qlktx.services.LoaiPhongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,13 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/nhomNguoiDung")
 public class NhomNguoiDungController {
+    @Autowired
+    private NhomNguoiDungRepo nhomNguoiDungRepo;
+    @GetMapping("")
+    public ResponseEntity<Object> list() {
+        return ResponseEntity.ok(nhomNguoiDungRepo.findAll());
+    }
+
 //    @Autowired
 //    private  LoaiPhongService loaiPhongService;
 //    @GetMapping("")

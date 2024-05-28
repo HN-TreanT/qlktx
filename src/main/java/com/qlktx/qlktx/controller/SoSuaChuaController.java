@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class SoSuaChuaController {
     @Autowired
     private SoSuaChuaService soSuaChuaService;
-
+    
     @GetMapping("/list")
     public ResponseEntity<Object> list(
             @RequestParam(name = "page",required = false,defaultValue = "1") Integer page,

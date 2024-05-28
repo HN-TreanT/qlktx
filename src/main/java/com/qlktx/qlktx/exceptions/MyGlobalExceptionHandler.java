@@ -11,11 +11,15 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.qlktx.qlktx.payloads.APIResponse;
 
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
 public class MyGlobalExceptionHandler {
@@ -76,7 +80,9 @@ public class MyGlobalExceptionHandler {
 //     return new ResponseEntity<String>(res, HttpStatus.UNAUTHORIZED);
 //     }
 //
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AuthenticationException.class)
+    @ResponseBody
     public ResponseEntity<String>
     myAuthenticationException(AuthenticationException e) {
 
@@ -106,6 +112,11 @@ public class MyGlobalExceptionHandler {
         APIResponse res = new APIResponse(e.getMessage(), false, "");
 
         return new ResponseEntity<APIResponse>(res, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, WebRequest request) {
+        return new ResponseEntity<>("Endpoint not found", HttpStatus.NOT_FOUND);
     }
 
 }

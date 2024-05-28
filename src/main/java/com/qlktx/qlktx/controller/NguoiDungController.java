@@ -1,6 +1,7 @@
 package com.qlktx.qlktx.controller;
 
 import com.qlktx.qlktx.dto.NguoiDungDTO;
+import com.qlktx.qlktx.dto.RefreshTokenDTO;
 import com.qlktx.qlktx.dto.TaiKhoanDTO;
 import com.qlktx.qlktx.services.NguoiDungService;
 import jakarta.validation.Valid;
@@ -33,6 +34,11 @@ public class NguoiDungController {
     @PostMapping("/login")
     public  ResponseEntity<Object> login(@RequestBody @Valid TaiKhoanDTO taiKhoanDTO) {
         return nguoiDungService.login(taiKhoanDTO);
+    }
+
+    @PostMapping("/refresh")
+    public  ResponseEntity<Object> refresh(@RequestBody RefreshTokenDTO refresh_token) {
+        return nguoiDungService.refresh(refresh_token.getRefresh_token());
     }
 
 

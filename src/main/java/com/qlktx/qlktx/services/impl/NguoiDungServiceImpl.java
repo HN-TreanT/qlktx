@@ -2,26 +2,28 @@ package com.qlktx.qlktx.services.impl;
 
 import com.qlktx.qlktx.Custom.CustomUserDetails;
 import com.qlktx.qlktx.dto.NguoiDungDTO;
+import com.qlktx.qlktx.dto.PermissionRoleDTO;
 import com.qlktx.qlktx.dto.TaiKhoanDTO;
 import com.qlktx.qlktx.entities.Nguoidung;
 import com.qlktx.qlktx.entities.Nhomnguoidung;
-import com.qlktx.qlktx.entities.Phong;
+import com.qlktx.qlktx.payloads.PermissionRes;
 import com.qlktx.qlktx.repositories.NguoiDungRepo;
 import com.qlktx.qlktx.repositories.NhomNguoiDungRepo;
+import com.qlktx.qlktx.repositories.PermissionRoleRepo;
 import com.qlktx.qlktx.services.NguoiDungService;
+import com.qlktx.qlktx.services.PermissionRoleService;
+import com.qlktx.qlktx.utils.jwt.IJwtService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -34,6 +36,11 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     private NhomNguoiDungRepo nhomNguoiDungRepo;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private IJwtService iJwtService;
+
+    @Autowired
+    private PermissionRoleRepo permissionRoleRepo;
 
     @Override
     public ResponseEntity<Map<String, Object>> list(Integer idNhom, String tenNv, String chucVu, int page, int limit) {
@@ -73,12 +80,29 @@ public class NguoiDungServiceImpl implements NguoiDungService {
             return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
         }
 
+        Collection<PermissionRes> permissionRes = permissionRoleRepo.listAllPermission(opNguoidung.get().getNhomnguoidung().getIdNhom());
+
+        String jwtToken = iJwtService.generateToken(opNguoidung.get());
+        String refresh_token = iJwtService.generateRefreshToken(opNguoidung.get());
+
         if (bcypt.matches(taiKhoanDTO.getPassword(), opNguoidung.get().getMatKhau())) {
-            return  new ResponseEntity<>(opNguoidung.get(), HttpStatus.OK);
+            Map<String, Object> res = new HashMap<>();
+            res.put("access_token", jwtToken);
+            res.put("refresh_token", refresh_token);
+            res.put("nguoidung", opNguoidung.get());
+            res.put("permissions", permissionRes);
+            return  new ResponseEntity<>(res, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("login fail", HttpStatus.BAD_REQUEST);
         }
 
 
+    }
+
+    @Override
+    public ResponseEntity<Object> refresh(String token) {
+        String username = iJwtService.getUsernameFromRefreshtoken(token);
+        System.out.println(username);
+        return null;
     }
 }
