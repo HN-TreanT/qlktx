@@ -42,7 +42,8 @@ public class JwtServiceImpl implements IJwtService {
         return Jwts.builder()
                 .setSubject(nguoidung.getTenDangNhap())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 60*1000))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
@@ -52,13 +53,33 @@ public class JwtServiceImpl implements IJwtService {
         return Jwts.builder()
                 .setSubject(nguoidung.getTenDangNhap())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 30))
                 .signWith(SignatureAlgorithm.HS256, REFRESH_KEY)
                 .compact();
     }
 
     @Override
     public boolean validateJwtToken(String authToken) {
+        try {
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(authToken);
+            return true;
+        } catch (SignatureException e) {
+            log.error("Invalid JWT signature: {}", e.getMessage());
+        } catch (MalformedJwtException e) {
+            log.error("Invalid JWT token: {}", e.getMessage());
+        } catch (ExpiredJwtException e) {
+            log.error("JWT token is expired: {}", e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            log.error("JWT token is unsupported: {}", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            log.error("JWT claims string is empty: {}", e.getMessage());
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean validateRefreshToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(REFRESH_KEY).parseClaimsJws(authToken);
             return true;
@@ -100,6 +121,7 @@ public class JwtServiceImpl implements IJwtService {
         } catch (Exception ex) {
             return  false;
         }
+
     }
 
     // validation token

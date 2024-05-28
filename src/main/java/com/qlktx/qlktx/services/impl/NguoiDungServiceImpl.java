@@ -101,8 +101,20 @@ public class NguoiDungServiceImpl implements NguoiDungService {
 
     @Override
     public ResponseEntity<Object> refresh(String token) {
-        String username = iJwtService.getUsernameFromRefreshtoken(token);
-        System.out.println(username);
-        return null;
+        System.out.println(iJwtService.validateRefreshToken(token));
+        if (iJwtService.validateRefreshToken(token)) {
+            String username = iJwtService.getUsernameFromRefreshtoken(token);
+            Nguoidung nguoidung = nguoiDungRepo.findTopByTenDangNhap(username);
+            if (nguoidung == null) {
+                return new ResponseEntity<>("not found nguoi dung", HttpStatus.NOT_FOUND);
+            }
+            String access_token = iJwtService.generateToken(nguoidung);
+            Map<String, Object> res = new HashMap<>();
+            res.put("access_token", access_token);
+            return  ResponseEntity.ok(res);
+        }
+        else {
+            return  new ResponseEntity<>("token expired", HttpStatus.UNAUTHORIZED);
+        }
     }
 }

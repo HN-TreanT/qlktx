@@ -12,6 +12,7 @@ public interface IJwtService {
   String getUsernameFromRefreshtoken(String token);
 
     Boolean validateToken(String token, UserDetails userDetails);
+    boolean validateRefreshToken(String token);
 
     Boolean isTokenExpired(String token);
 //         boolean validateToken(String token);

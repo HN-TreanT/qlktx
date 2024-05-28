@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class SinhVienServiceImpl implements SinhVienService {
@@ -30,7 +31,7 @@ public class SinhVienServiceImpl implements SinhVienService {
     private SinhVienRepo sinhVienRepo;
 
     @Autowired
-    private PhongRepo PhongRepo;
+    private PhongRepo phongRepo;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -51,7 +52,7 @@ public class SinhVienServiceImpl implements SinhVienService {
     public APIResponse create(SinhVienDTO dto) {
         System.out.println(dto);
         if (dto.getSoPhong() != null) {
-            Phong optionalPhong = PhongRepo.getReferenceById(dto.getSoPhong());
+            Phong optionalPhong = phongRepo.getReferenceById(dto.getSoPhong());
             Sinhvien sv = modelMapper.map(dto, Sinhvien.class);
             sv.setPhong(optionalPhong);
             sinhVienRepo.save(sv);
@@ -66,9 +67,16 @@ public class SinhVienServiceImpl implements SinhVienService {
     @Override
     @Transactional
     public APIResponse edit(Integer maSinhVien, SinhVienDTO dto) {
+
         Sinhvien sv = sinhVienRepo.findByMaSinhVien(maSinhVien);
         if (sv == null) {
             return new APIResponse("Không tìm thấy sinh viên", false, "");
+        }
+
+        if (dto.getSoPhong() != sv.getPhong().getSoPhong()) {
+             Optional<Phong> phong = phongRepo.findById(dto.getSoPhong());
+             if (!phong.isPresent()) return new APIResponse("Không tìm thấy phòng", false, "");
+             sv.setPhong(phong.get());
         }
         sv.setHoTenSinhVien(dto.getHoTenSinhVien());
         sv.setCccd(dto.getCccd());

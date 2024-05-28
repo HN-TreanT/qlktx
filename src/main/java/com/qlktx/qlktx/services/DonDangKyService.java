@@ -13,4 +13,6 @@ public interface DonDangKyService {
     APIResponse create(DonDangKyDTO dto);
     APIResponse edit(Integer maDonDangKy, DonDangKyDTO dto);
     APIResponse delete(Integer maDonDangKy);
+
+    ResponseEntity<Object> duyetDonDangKy(Integer maDonDangKy,  Integer maPhong);
 }

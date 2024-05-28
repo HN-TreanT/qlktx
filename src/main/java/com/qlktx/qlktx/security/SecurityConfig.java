@@ -36,29 +36,26 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final IUserService userService;
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws  Exception {
-//        http.csrf(AbstractHttpConfigurer::disable)
-//                .cors(Customizer.withDefaults())
-//                .httpBasic(Customizer.withDefaults())
-//                .authorizeHttpRequests(request -> request
-//                         .requestMatchers("/api/v1/**").permitAll()
-//                        .anyRequest().permitAll());
-////                         .requestMatchers("/api/v1/**").hasAuthority("Admin")
-////                        .requestMatchers("/api/v1/phong/**").hasAuthority("Admin")
-////                        .requestMatchers("/api/v1/phieuthanhtoan/**").hasAnyAuthority("User", "Admin")
-////                        .requestMatchers("/api/v1/sosuachua/**").hasRole("User")
-////                        .anyRequest().authenticated());
-////                .addFilterBefore(jwtAuthenticationFilter,  UsernamePasswordAuthenticationFilter.class);
-//        return http.build();
-//    }
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws  Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws  Exception {
         http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+                .authorizeHttpRequests(request -> request
+                         .requestMatchers("/api/v1/**").permitAll()
+//                         .requestMatchers("/api/v1/**").hasAuthority("Admin")
+//                        .requestMatchers("/api/v1/phong/**").hasAuthority("Admin")
+//                        .requestMatchers("/api/v1/phieuthanhtoan/**").hasAnyAuthority("User", "Admin")
+//                        .requestMatchers("/api/v1/sosuachua/**").hasRole("User")
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtAuthenticationFilter,  UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws  Exception{
+//        http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
+//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+//        return http.build();
+//    }
 
 
 

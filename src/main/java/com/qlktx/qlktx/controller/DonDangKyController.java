@@ -44,4 +44,10 @@ public class DonDangKyController {
     public ResponseEntity<Object> delete(@PathVariable Integer maDonDangKy) {
         return ResponseEntity.ok(donDangKyService.delete(maDonDangKy));
     }
+
+
+    @PostMapping("/duyetdondangky")
+    public ResponseEntity<Object> duyetDonDangKy(@RequestParam("ma_don_dang_ky") Integer maDonDangKy, @RequestParam("ma_phong") Integer ma_phong){
+        return donDangKyService.duyetDonDangKy(maDonDangKy, ma_phong);
+    }
 }
