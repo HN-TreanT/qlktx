@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("api/v1/phieuthanhtoan")
+@CrossOrigin("*")
 public class PhieuThanhToanController {
     @Autowired
     private PhieuThanhToanService phieuThanhToanService;

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/sosuachua")
+@CrossOrigin("*")
 public class SoSuaChuaController {
     @Autowired
     private SoSuaChuaService soSuaChuaService;

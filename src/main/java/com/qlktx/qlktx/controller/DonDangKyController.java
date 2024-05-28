@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/dondangky")
+@CrossOrigin("*")
 public class DonDangKyController {
     @Autowired
     private DonDangKyService donDangKyService;

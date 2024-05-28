@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/sodiennuoc")
+@CrossOrigin("*")
 public class SoDienNuocController {
     @Autowired
     private SoDienNuocSerivce soDienNuocSerivce;

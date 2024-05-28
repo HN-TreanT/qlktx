@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/phong")
+@CrossOrigin("*")
 public class PhongController {
     @Autowired
     private  PhongService PhongService;

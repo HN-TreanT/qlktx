@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("api/v1/bienbanbangiao")
+@CrossOrigin("*")
 public class BienBanBanGiaoController {
     @Autowired
     private BienBanBanGiaoService bienBanBanGiaoService;

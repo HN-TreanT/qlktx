@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/dondoiphong")
-@CrossOrigin
+@CrossOrigin("*")
 public class DonDoiPhongController {
 
     @Autowired

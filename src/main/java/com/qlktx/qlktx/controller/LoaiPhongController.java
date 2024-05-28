@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/loaiphong")
+@CrossOrigin("*")
 public class LoaiPhongController {
     @Autowired
     private  LoaiPhongService loaiPhongService;

@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("api/v1/phieuphat")
+@CrossOrigin("*")
 public class PhieuPhatController {
     @Autowired
     private PhieuPhatService phieuPhatService;

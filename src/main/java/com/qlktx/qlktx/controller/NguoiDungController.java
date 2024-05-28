@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/nguoidung")
+@CrossOrigin("*")
 public class NguoiDungController {
     @Autowired
     private NguoiDungService nguoiDungService;

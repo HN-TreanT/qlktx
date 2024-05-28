@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("api/v1/thietbi")
+@CrossOrigin("*")
 public class ThietBiController {
     @Autowired
     private ThietBiService thietBiService;

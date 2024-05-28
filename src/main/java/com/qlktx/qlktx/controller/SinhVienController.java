@@ -17,6 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/sinhvien")
+@CrossOrigin("*")
 public class SinhVienController {
     @Autowired
     private SinhVienService sinhVienService;
