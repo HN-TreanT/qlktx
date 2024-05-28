@@ -54,7 +54,7 @@ import java.util.Optional;
         }
         @Override
         public ResponseEntity<Object> create(PhongDTO dto) {
-            Optional<Loaiphong> optionalLoaiPhong = Optional.of(loaiPhongRepo.getReferenceById(dto.getMaLoaiPhong()));
+            Optional<Loaiphong> optionalLoaiPhong = Optional.of(dto.getMaLoaiPhong()).flatMap(loaiPhongRepo::findById);
             if (!optionalLoaiPhong.isPresent())  return new ResponseEntity<>("Không tìm thấy loại phòng", HttpStatus.NOT_FOUND);
 
             Phong phong = phongConverter.toEntity(dto);
