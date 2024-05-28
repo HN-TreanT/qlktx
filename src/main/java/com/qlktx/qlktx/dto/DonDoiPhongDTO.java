@@ -21,6 +21,7 @@ public class DonDoiPhongDTO {
     private LocalDateTime ngayLamDon;
 
     private String lyDo;
+    private Integer trangThai;
 
     @NotNull(message = "Mã sinh viên không được bỏ trống")
     private Integer maSinhVien;

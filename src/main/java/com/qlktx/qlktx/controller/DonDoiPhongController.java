@@ -28,6 +28,7 @@ public class DonDoiPhongController {
             @RequestParam(name = "page",required = false,defaultValue = "1") Integer page,
             @RequestParam(name = "limit",required = false,defaultValue = "10") Integer limit,
             @RequestParam(name = "maPhong", required = false) Integer maPhong,
+//            @RequestParam(name = "trangThai", required = false) String trangThai,
             @RequestParam(name = "maSinhvien", required = false) Integer maSinhvien
 
     ) {

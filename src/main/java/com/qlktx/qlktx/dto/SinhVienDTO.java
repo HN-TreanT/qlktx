@@ -33,14 +33,11 @@ public class SinhVienDTO {
 
         private String cccd;
 
-        @NotBlank(message = "Lớp không bỏ trống")
         private String lop;
 
-        @NotBlank(message = "khóa không bỏ trống")
         private String khoa;
 
-        @NotNull(message = "Khóa học không bỏ trống")
-        private Integer khoaHoc;
+        private String khoaHoc;
 
         private String sdt;
 
