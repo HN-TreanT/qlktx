@@ -11,4 +11,6 @@ public interface DonDoiPhongService {
     ResponseEntity<Object> create(DonDoiPhongDTO donDoiPhongDTO);
     ResponseEntity<Object> delete(Integer id);
     ResponseEntity<Object> detail(Integer id);
+
+    ResponseEntity<Object> duyetDon(Integer ma_don);
 }

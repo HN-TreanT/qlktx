@@ -91,4 +91,28 @@ public class DonDoiPhongServiceImpl implements DonDoiPhongService {
         if ( !dondoiphong.isPresent()) return  new ResponseEntity<>(new APIResponse("Không tìm thấy đơn đổi phòng", true, null), HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(new APIResponse("success", true, dondoiphong.get()));
     }
+
+    @Override
+    public ResponseEntity<Object> duyetDon(Integer ma_don) {
+        Optional<Dondoiphong> dondoiphong = donDoiPhongRepo.findById(ma_don);
+        if ( !dondoiphong.isPresent()) return  new ResponseEntity<>("not found  đơn đổi phòng", HttpStatus.NOT_FOUND);
+
+        Phong oldPhong = dondoiphong.get().getSinhvien().getPhong();
+        if (oldPhong != null) {
+            oldPhong.setSoNguoiO(oldPhong.getSoNguoiO() - 1);
+        }
+
+        // update phong moi
+        Phong newPhong = dondoiphong.get().getPhong();
+        newPhong.setSoNguoiO(newPhong.getSoNguoiO() + 1);
+        if (newPhong.getSoNguoiO() > newPhong.getLoaiphong().getSoLuongNguoi()) {
+            return  new ResponseEntity<>(new APIResponse("Phòng " + newPhong.getTenPhong() + " đã đầy" , false, null), HttpStatus.OK);
+        }
+
+        dondoiphong.get().setTrangThai(1);
+        phongRepo.save(newPhong);
+        if (oldPhong != null) phongRepo.save(oldPhong);
+        donDoiPhongRepo.save(dondoiphong.get());
+        return  new ResponseEntity<>(new APIResponse("Duyệt thành công" , false, null), HttpStatus.OK);
+    }
 }

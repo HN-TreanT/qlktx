@@ -55,4 +55,10 @@ public class DonDoiPhongController {
     public ResponseEntity<Object> detail(@PathVariable Integer maDonDoiPhong) {
         return donDoiPhongService.detail(maDonDoiPhong);
     }
+
+    @GetMapping("/duyetdon/{maDonDoiPhong}")
+    public ResponseEntity<Object> duyet(@PathVariable Integer maDonDoiPhong) {
+        return donDoiPhongService.duyetDon(maDonDoiPhong);
+    }
+
 }
