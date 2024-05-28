@@ -38,7 +38,7 @@ public class Sinhvien {
     private String khoa;
 
     @Column(name = "KhoaHoc", nullable = true)
-    private Integer khoaHoc;
+    private String khoaHoc;
 
     @Column(name = "SDT", nullable = true)
     private String sdt;
