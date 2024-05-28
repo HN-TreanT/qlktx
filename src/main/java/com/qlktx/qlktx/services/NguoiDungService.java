@@ -13,4 +13,5 @@ public interface NguoiDungService {
     ResponseEntity<Map<String, Object>> list(Integer idNhom, String tenNv, String chucVu, int page, int limit);
     ResponseEntity<Object> register(NguoiDungDTO dto);
     ResponseEntity<Object> login(TaiKhoanDTO taiKhoanDTO);
+    ResponseEntity<Object> refresh(String token);
 }

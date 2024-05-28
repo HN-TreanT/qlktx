@@ -7,6 +7,9 @@ public interface IJwtService {
     String getUsernameFromJWT(String token);
 
     String generateToken(Nguoidung nguoidung);
+    String generateRefreshToken(Nguoidung nguoidung);
+     boolean validateJwtToken(String authToken);
+  String getUsernameFromRefreshtoken(String token);
 
     Boolean validateToken(String token, UserDetails userDetails);
 

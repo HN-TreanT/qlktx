@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "nguoidung")
@@ -46,8 +47,22 @@ public class Nguoidung implements UserDetails {
     @JoinColumn(name = "ID_Nhom", nullable = true)
     private Nhomnguoidung nhomnguoidung;
 
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "permisstion_role",
+//            joinColumns = @JoinColumn(name = "id_nhomnguoidung"),
+//            inverseJoinColumns = @JoinColumn(name = "id_permission")
+//    )
+//    private List<Permission> permissions;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+//        List<SimpleGrantedAuthority> authorities = permissions.stream().map(per -> {
+//            String role = "ROLE_" + per.getName() + ":";
+//            return new SimpleGrantedAuthority(per.getName());
+//        })
+//                .collect(Collectors.toList());
+//        authorities.add(new SimpleGrantedAuthority(nhomnguoidung.getQuyen()));
         return List.of(new SimpleGrantedAuthority(nhomnguoidung.getQuyen()));
     }
 
