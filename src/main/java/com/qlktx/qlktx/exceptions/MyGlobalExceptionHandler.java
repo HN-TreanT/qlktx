@@ -69,36 +69,6 @@ public class MyGlobalExceptionHandler {
         return new ResponseEntity<Map<String, String>>(res, HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(AuthorizationEx.class)
-
-//     @ExceptionHandler(AuthenticationException.class)
-//     public ResponseEntity<String>
-//     myAuthenticationException(AuthenticationException e) {
-//
-//     String res = e.getMessage();
-//
-//     return new ResponseEntity<String>(res, HttpStatus.UNAUTHORIZED);
-//     }
-//
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseBody
-    public ResponseEntity<String>
-    myAuthenticationException(AuthenticationException e) {
-
-        String res = e.getMessage();
-
-        return new ResponseEntity<String>(res, HttpStatus.UNAUTHORIZED);
-    }
-
-//    @ExceptionHandler(Ex.class)
-//    public ResponseEntity<String>
-//    myAuthenticationException(AuthenticationException e) {
-//
-//        String res = e.getMessage();
-//
-//        return new ResponseEntity<String>(res, HttpStatus.UNAUTHORIZED);
-//    }
 
     @ExceptionHandler(MissingPathVariableException.class)
     public ResponseEntity<APIResponse> myMissingPathVariableException(MissingPathVariableException e) {

@@ -9,13 +9,15 @@ import com.qlktx.qlktx.repositories.SinhVienRepo;
 import com.qlktx.qlktx.services.DonDangKyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Service
@@ -30,9 +32,15 @@ public class DonDangKyServiceImpl implements DonDangKyService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<Dondangky> list(String hoTenSinhVien, String doiTuongUuTien) {
-        List<Dondangky> dondks = donDangKyRepo.findAll();
-        return dondks;
+    public ResponseEntity<Object> list(String hoTenSinhVien, String doiTuongUuTien, Pageable pageable) {
+        Page<Dondangky> list = donDangKyRepo.findAllDon(pageable);
+        Map<String, Object> response = new HashMap<>();
+        response.put("page", pageable.getPageNumber() + 1);
+        response.put("limit", pageable.getPageSize());
+        response.put("totalElements", list.getTotalElements());
+        response.put("totalPage", list.getTotalPages());
+        response.put("data", list.getContent());
+        return  ResponseEntity.ok(response);
     }
     @Override
     public APIResponse create(DonDangKyDTO dto) {

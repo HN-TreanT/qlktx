@@ -21,7 +21,8 @@ public class UserServices implements UserDetailsService {
         if (nguoidung == null) {
             throw  new UsernameNotFoundException(username);
         }
-        CustomUserDetails customUserDetails = new CustomUserDetails(nguoidung);
+//        CustomUserDetails customUserDetails = new CustomUserDetails(nguoidung);
+//        customUserDetails.setAuthorities(authorities);
 
         return  new CustomUserDetails(nguoidung);
     }
