@@ -8,6 +8,7 @@
     import org.springframework.data.jpa.repository.JpaRepository;
     import org.springframework.data.jpa.repository.Query;
     import org.springframework.stereotype.Repository;
+    import org.springframework.web.bind.annotation.RequestParam;
 
     import java.util.List;
 
@@ -15,7 +16,7 @@
     public interface DonDangKyRepo extends JpaRepository<Dondangky, Integer> {
         Dondangky findByMaDonDangKy(Integer maDonDangKy);
 
-        @Query("select ddk from Dondangky ddk")
-        Page<Dondangky> findAllDon(Pageable pageable);
+        @Query("select ddk from Dondangky ddk where :trangThai is null or ddk.trangThai = :trangThai")
+        Page<Dondangky> findAllDon(@RequestParam("trangThai") String trangThai,  Pageable pageable);
 
     }

@@ -23,11 +23,12 @@ public class DonDangKyController {
             @RequestParam(name = "page",required = false,defaultValue = "1") int page,
             @RequestParam(name = "limit",required = false,defaultValue = "10") int limit,
             @RequestParam(name = "hoTenSinhVien", required = false) String hoTenSinhVien,
-            @RequestParam(name = "doiTuongUuTien", required = false) String doiTuongUuTien
+            @RequestParam(name = "doiTuongUuTien", required = false) String doiTuongUuTien,
+            @RequestParam(name = "trangThai", required = false) String trangThai
 
     ) {
         Pageable pageable = PageRequest.of(page - 1 , limit);
-        return donDangKyService.list(hoTenSinhVien, doiTuongUuTien, pageable);
+        return donDangKyService.list(hoTenSinhVien, doiTuongUuTien,trangThai, pageable);
     }
 
     @PostMapping("/add")

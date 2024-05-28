@@ -45,8 +45,8 @@ public class DonDangKyServiceImpl implements DonDangKyService {
     private PhongRepo phongRepo;
 
     @Override
-    public ResponseEntity<Object> list(String hoTenSinhVien, String doiTuongUuTien, Pageable pageable) {
-        Page<Dondangky> list = donDangKyRepo.findAllDon(pageable);
+    public ResponseEntity<Object> list(String hoTenSinhVien, String doiTuongUuTien, String trangThai, Pageable pageable) {
+        Page<Dondangky> list = donDangKyRepo.findAllDon(trangThai, pageable);
         Map<String, Object> response = new HashMap<>();
         response.put("page", pageable.getPageNumber() + 1);
         response.put("limit", pageable.getPageSize());

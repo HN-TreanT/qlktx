@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface DonDangKyService {
-    ResponseEntity<Object> list(String hoTenSinhVien, String doiTuongUuTien, Pageable pageable);
+    ResponseEntity<Object> list(String hoTenSinhVien, String doiTuongUuTien, String trangThai, Pageable pageable);
     APIResponse create(DonDangKyDTO dto);
     APIResponse edit(Integer maDonDangKy, DonDangKyDTO dto);
     APIResponse delete(Integer maDonDangKy);
