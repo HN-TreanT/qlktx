@@ -25,25 +25,43 @@ public interface PhieuThanhToanRepo extends JpaRepository<Phieuthanhtoan, Intege
                                                @Param("timeEnd") LocalDateTime timeEnd , Pageable pageable);
 
 
-    @Query(value = "WITH TotalDienNuoc AS (SELECT ma_phieu_thanh_toan, SUM(tong_tien) AS tongtienDiennuoc FROM sodiennuoc GROUP BY ma_phieu_thanh_toan),\n" +
-            "TotalSuaChua AS (SELECT ma_phieu_thanh_toan, SUM(phi_sua_chua) AS tongtienSuachua FROM sosuachua GROUP BY ma_phieu_thanh_toan),\n" +
-            "TotalPhat AS (SELECT ma_phieu_thanh_toan, SUM(phi_phat) AS tongtienPhat FROM phieuphat GROUP BY ma_phieu_thanh_toan)\n" +
-            "SELECT ptt.ma_phieu_thanh_toan, p.ten_phong, ptt.ma_sinh_vien, ptt.so_phong, ptt.ngay_thu, ptt.noi_dung_thu, ptt.trang_thai, ptt.so_tien, \n" +
-            "    COALESCE(td.tongtienDiennuoc, 0) AS tongtienDiennuoc, \n" +
-            "    COALESCE(tsc.tongtienSuachua, 0) AS tongtienSuachua, \n" +
-            "    COALESCE(tp.tongtienPhat, 0) AS tongtienPhat\n" +
+//    @Query(value = "WITH TotalDienNuoc AS (SELECT ma_phieu_thanh_toan, SUM(tong_tien) AS tongtienDiennuoc FROM sodiennuoc GROUP BY ma_phieu_thanh_toan),\n" +
+//            "TotalSuaChua AS (SELECT ma_phieu_thanh_toan, SUM(phi_sua_chua) AS tongtienSuachua FROM sosuachua GROUP BY ma_phieu_thanh_toan),\n" +
+//            "TotalPhat AS (SELECT ma_phieu_thanh_toan, SUM(phi_phat) AS tongtienPhat FROM phieuphat GROUP BY ma_phieu_thanh_toan)\n" +
+//            "SELECT ptt.ma_phieu_thanh_toan, p.ten_phong, ptt.ma_sinh_vien, ptt.so_phong, ptt.ngay_thu, ptt.noi_dung_thu, ptt.trang_thai, ptt.so_tien, \n" +
+//            "    COALESCE(td.tongtienDiennuoc, 0) AS tongtienDiennuoc, \n" +
+//            "    COALESCE(tsc.tongtienSuachua, 0) AS tongtienSuachua, \n" +
+//            "    COALESCE(tp.tongtienPhat, 0) AS tongtienPhat\n" +
+//            "FROM \n" +
+//            "    qlktx.phieuthanhtoan ptt\n" +
+//            "LEFT JOIN TotalDienNuoc td ON ptt.ma_phieu_thanh_toan = td.ma_phieu_thanh_toan\n" +
+//            "LEFT JOIN TotalSuaChua tsc ON ptt.ma_phieu_thanh_toan = tsc.ma_phieu_thanh_toan\n" +
+//            "LEFT JOIN TotalPhat tp ON ptt.ma_phieu_thanh_toan = tp.ma_phieu_thanh_toan\n" +
+//            "LEFT JOIN phong p ON p.so_phong = ptt.so_phong\n" +
+//            "where ptt.ma_hop_dong is null and (:soPhong is null or ptt.so_phong = :soPhong) and " +
+//            "(:timeStart is null or :timeEnd is null or (ptt.ngay_thu >= :timeStart and ptt.ngay_thu <= :timeEnd))\n" +
+//            "GROUP BY ptt.ma_phieu_thanh_toan, ptt.ma_sinh_vien, ptt.so_phong, ptt.ngay_thu, ptt.noi_dung_thu, ptt.trang_thai, ptt.so_tien, td.tongtienDiennuoc, tsc.tongtienSuachua, tp.tongtienPhat, p.ten_phong", nativeQuery = true)
+//    Page<PhieuThanhToanRes> getPhieuThanhToanPhong(@Param("soPhong") Integer soPhong,
+//                                                   @Param("timeStart") LocalDateTime timeStart,
+//                                                   @Param("timeEnd") LocalDateTime timeEnd , Pageable pageable);
+
+    @Query(value = "SELECT ptt.ma_phieu_thanh_toan, p.ten_phong, ptt.ma_sinh_vien, ptt.so_phong, ptt.ngay_thu, ptt.noi_dung_thu, ptt.trang_thai, ptt.so_tien, \n" +
+            "    COALESCE((SELECT SUM(tong_tien) FROM sodiennuoc WHERE ma_phieu_thanh_toan = ptt.ma_phieu_thanh_toan), 0) AS tongtienDiennuoc, \n" +
+            "    COALESCE((SELECT SUM(phi_sua_chua) FROM sosuachua WHERE ma_phieu_thanh_toan = ptt.ma_phieu_thanh_toan), 0) AS tongtienSuachua, \n" +
+            "    COALESCE((SELECT SUM(phi_phat) FROM phieuphat WHERE ma_phieu_thanh_toan = ptt.ma_phieu_thanh_toan), 0) AS tongtienPhat\n" +
             "FROM \n" +
             "    qlktx.phieuthanhtoan ptt\n" +
-            "LEFT JOIN TotalDienNuoc td ON ptt.ma_phieu_thanh_toan = td.ma_phieu_thanh_toan\n" +
-            "LEFT JOIN TotalSuaChua tsc ON ptt.ma_phieu_thanh_toan = tsc.ma_phieu_thanh_toan\n" +
-            "LEFT JOIN TotalPhat tp ON ptt.ma_phieu_thanh_toan = tp.ma_phieu_thanh_toan\n" +
             "LEFT JOIN phong p ON p.so_phong = ptt.so_phong\n" +
-            "where ptt.ma_hop_dong is null and (:soPhong is null or ptt.so_phong = :soPhong) and " +
-            "(:timeStart is null or :timeEnd is null or (ptt.ngay_thu >= :timeStart and ptt.ngay_thu <= :timeEnd))\n" +
-            "GROUP BY ptt.ma_phieu_thanh_toan, ptt.ma_sinh_vien, ptt.so_phong, ptt.ngay_thu, ptt.noi_dung_thu, ptt.trang_thai, ptt.so_tien, td.tongtienDiennuoc, tsc.tongtienSuachua, tp.tongtienPhat, p.ten_phong", nativeQuery = true)
+            "WHERE ptt.ma_hop_dong IS NULL \n" +
+            "    AND (:soPhong IS NULL OR ptt.so_phong = :soPhong) \n" +
+            "    AND (:timeStart IS NULL OR :timeEnd IS NULL OR (ptt.ngay_thu >= :timeStart AND ptt.ngay_thu <= :timeEnd))\n" +
+            "GROUP BY ptt.ma_phieu_thanh_toan, ptt.ma_sinh_vien, ptt.so_phong, ptt.ngay_thu, ptt.noi_dung_thu, ptt.trang_thai, ptt.so_tien, p.ten_phong",
+            nativeQuery = true)
     Page<PhieuThanhToanRes> getPhieuThanhToanPhong(@Param("soPhong") Integer soPhong,
                                                    @Param("timeStart") LocalDateTime timeStart,
-                                                   @Param("timeEnd") LocalDateTime timeEnd , Pageable pageable);
+                                                   @Param("timeEnd") LocalDateTime timeEnd,
+                                                   Pageable pageable);
+
 
     @Modifying
     @Query(value = "INSERT INTO phieuthanhtoan (noi_dung_thu, ngay_thu, so_tien, ma_hop_dong, so_phong, ma_sinh_vien, ma_phieu_phat, ma_so_sua_chua, ma_so_dien_nuoc) " +
